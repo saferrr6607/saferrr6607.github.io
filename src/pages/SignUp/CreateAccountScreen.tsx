@@ -2,7 +2,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { PropsWithChildren, useCallback, useContext, useEffect, useReducer, useState } from "react";
 import { ToastAndroid } from "react-native";
 import { Input, ScrollView, Stack, Text, styled } from "tamagui";
-import { HeaderText, InputWithError } from "./recipe";
+import { HeaderText, InputWithError, SubHeader } from "./recipe";
 import PrimaryButton from "../../components/PrimaryButton";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FormContext } from ".";
@@ -10,11 +10,6 @@ import { AccountErrorType } from "./types";
 import { Auth } from "aws-amplify";
 import { useFocusEffect } from "@react-navigation/native";
 import { AppContext } from "../../contexts/AppContext";
-
-const SubHeader = styled(Text, {
-    fontWeight: "500",
-    color: "$textSecondary",
-});
 
 type reducerActionType = {
     type: string,

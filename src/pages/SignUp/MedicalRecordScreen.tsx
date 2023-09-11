@@ -102,7 +102,7 @@ function MedicalRecordScreen(props: PropsWithChildren & NativeStackScreenProps<a
         DataStore.save(data)
             .then(saved => {
                 console.log("saved", saved);
-                navigation.navigate("SignUp.EmergencyContact");
+                navigation.navigate("SignUp.UserVerification");
             })
             .catch(err => {
                 console.log("err", err);
@@ -110,7 +110,7 @@ function MedicalRecordScreen(props: PropsWithChildren & NativeStackScreenProps<a
     }
 
     const skip = () => {
-        navigation.navigate("SignUp.EmergencyContact");
+        navigation.navigate("SignUp.UserVerification");
     }
 
     const name = `${ctx.first_name} ${ctx.last_name}`;

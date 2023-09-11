@@ -6,6 +6,7 @@ import { AccountType, EmergencyContactType, FormType, MedicalRecordType, reducer
 import MedicalRecordScreen from "./MedicalRecordScreen";
 import OTPScreen from "./OTPScreen";
 import EmergencyContactScreen from "./EmergencyContactScreen";
+import UserVerificationScreen from "./UserVerificationScreen";
 
 const NavigationStack = createNativeStackNavigator();
 
@@ -134,6 +135,10 @@ function SignUpNavigation(): JSX.Element {
             <NavigationStack.Screen
                 name="SignUp.MedicalRecord"
                 component={MedicalRecordScreen}
+            />
+            <NavigationStack.Screen
+                name="SignUp.UserVerification"
+                component={UserVerificationScreen}
             />
             <NavigationStack.Screen
                 name="SignUp.EmergencyContact"

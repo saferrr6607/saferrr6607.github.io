@@ -1,0 +1,23 @@
+type MedicalRecord @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  date_of_birth: String
+  medical_condition: String
+  medical_notes: String
+  medications: String
+  blood_type: String
+  organ_donor: String
+  weight: String
+  height: String
+  skin_color: String
+  hair_color: String
+  tattoo: String
+}
+
+type EmergencyContact @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  name: String
+  phone_number: String
+  status: Int
+  phone_number_id: String
+}
+ 

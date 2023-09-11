@@ -7,6 +7,11 @@ const HeaderText = styled(Text, {
     fontWeight: "600",
 });
 
+const SubHeader = styled(Text, {
+    fontWeight: "500",
+    color: "$textSecondary",
+});
+
 type InputWithErrorProps = StackProps & {
     value: string | undefined
     onChangeText: (text: string) => any | undefined
@@ -53,4 +58,4 @@ function LabelledStack(props: PropsWithChildren & LabelledStackProps): JSX.Eleme
 
 }
 
-export { HeaderText, InputWithError, LabelledStack };
+export { HeaderText, SubHeader, InputWithError, LabelledStack };

@@ -1,20 +1,26 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { DataStore } from "aws-amplify";
-import React, { PropsWithChildren, useEffect, useState } from "react";
+import React, { PropsWithChildren, useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Button, Dialog, Spinner, Stack, styled, Text, XStack, ZStack } from "tamagui";
+import { Adapt, Button, Dialog, DialogProps, Separator, Sheet, Spinner, Stack, styled, Text, Unspaced, XStack, ZStack } from "tamagui";
 import { EmergencyContact, MedicalRecord } from "../../models";
 import { checkTorchPermission } from "../../utils/permissions.android";
 import DrawerScreen from "./components/DrawerScreen";
 import Geolocation from '@react-native-community/geolocation';
 import MapView, { Region } from "react-native-maps";
-import { Alert, Platform, StyleSheet, ToastAndroid } from "react-native";
+import { Alert, FlatList, Platform, Share, StyleSheet, ToastAndroid } from "react-native";
 import PrimaryButton from "../../components/PrimaryButton";
 import SecondaryButton from "../../components/SecondaryButton";
 import axios from "axios";
-import { Text as RText } from 'react-native';;
+import { Text as RText } from 'react-native';
+import Feather from 'react-native-vector-icons/dist/Feather';
 
 import ReactNativeBlobUtil from 'react-native-blob-util'
+import { AppContext } from "../../contexts/AppContext";
+import { setPath } from "react-native-reanimated/lib/types/lib/reanimated2/animation/styleAnimation";
+import ContactListItem from "../../components/ContactListItem";
+import { ContactPersonType } from "../../types/contacts";
+import { createSOSMsg, sendSMS } from "../../utils/sms";
 var RNFS = require('react-native-fs');
 
 const DefaultButton = styled(Button, {
@@ -56,22 +62,145 @@ function useGeoCode(shareMode: boolean) {
 
 }
 
-function ShareDialog(props) {
-    return <Dialog open={props.open}>
-        <Dialog.Trigger />
+const sharePhases = ['initial', 'contact', 'link'] as const;
+type SharePhaseType = typeof sharePhases[number];
+function ShareDialog(props: PropsWithChildren & DialogProps & { onOpenChange: Function, link: string }): JSX.Element {
+
+    const { onOpenChange, link } = props;
+
+    const [phase, setPhase] = useState<SharePhaseType>('initial');
+
+    const app_ctx = useContext(AppContext);
+    const me = app_ctx?.cognito ?? null;
+    const name = me?.name ?? '';
+
+    const [model, setModel] = useState<{ [key: string]: ContactPersonType | null } | null | undefined>(null);
+    const [loading, setLoading] = useState<boolean>(false);
+
+    useEffect(() => {
+        return function () {
+            setPhase('initial');
+            setModel(null);
+            setLoading(false);
+        }
+    }, []);
+
+    const toggleModel = (id: string, name: string, phone_number: string) => {
+
+        let selected = Boolean(model) ? Object.values(model) : [];
+        selected = selected.filter(item => Boolean(item));
+
+        const in_selected = Boolean(model && model[id]);
+        console.log('check in selected');
+        if (in_selected) {
+            setModel(model => ({ ...model, [id]: null }));
+            // setSelected(ids => {
+            //     return ids.filter(v => v != id);
+            // });
+        } else {
+            if (selected.length < 5) {
+                setModel(model => ({ ...model, [id]: { id, name, phone_number } }));
+            }
+        }
+    };
+
+    const handleOnShareToContacts = () => setPhase('contact');
+    const handleOnShareLink = () => {
+        onOpenChange(false);
+        setPhase('initial');
+        const content = createSOSMsg(name, link);
+        Share.share({
+            message: content,
+        });
+        // share link
+    }
+
+    const handleOnShare = async () => {
+        let selected = Boolean(model) ? Object.values(model) : [];
+        selected = selected.filter(item => Boolean(item));
+
+        if (selected.length == 0) {
+            if (Platform.OS == 'android') {
+                ToastAndroid.showWithGravityAndOffset("Please select at least 1 emergency contact", ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
+            } else {
+                Alert.alert("Please select at least 1 emergency contact");
+            }
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            for (let contact of selected) {
+                if (contact?.phone_number) {
+                    const response = await sendSMS(contact?.phone_number, link, name);
+                }
+            }
+        } catch (err) {
+            console.log('err@handleOnShare', err.message);
+        }
+
+        setLoading(false);
+
+        onOpenChange(false);
+
+    }
+
+    return <Dialog modal open={props.open} onOpenChange={onOpenChange}>
         <Dialog.Portal>
-            <Dialog.Overlay />
-            <Dialog.Content>
-                <Dialog.Title>
-                    Dito?
+            <Dialog.Overlay
+                key="overlay"
+                animation="quick"
+                opacity={0.5}
+                enterStyle={{ opacity: 0 }}
+                exitStyle={{ opacity: 0 }}
+            />
+            <Dialog.Content marginHorizontal={20}>
+                <Dialog.Title height={32}>
                 </Dialog.Title>
-                <Dialog.Description>
-                    How do you want to share your location?
-                </Dialog.Description>
-                <Dialog.Close />
+                {phase == 'initial' && <>
+                    <Dialog.Description fontSize={18} fontWeight={'700'} flexWrap='wrap' textAlign="center" px={10} mb={40}>
+                        How do you want to share your location?
+                    </Dialog.Description>
+                    <Stack gap={12}>
+                        <PrimaryButton onPress={handleOnShareToContacts}>Share to my emegency contact</PrimaryButton>
+                        <SecondaryButton onPress={handleOnShareLink}>Create a shareable link</SecondaryButton>
+                    </Stack>
+                </>}
+                {phase == 'contact' && <>
+                    <Dialog.Description fontSize={18} fontWeight={'700'} flexWrap='wrap' textAlign="center" px={10} mb={40}>
+                        Share to my emergency contact
+                    </Dialog.Description>
+                    {app_ctx?.myContacts.map((item, index) => {
+                        const checked = Boolean(model && model[item.id]);
+                        return <React.Fragment key={`x${index}-${Boolean(model && model[item.id]) ? item.id : 'x'}`}>
+                            <ContactListItem key={`${index}-${Boolean(model && model[item.id]) ? item.id : 'x'}`} {...item} updateModel={toggleModel} checked={checked} />
+                            <Separator mb={10} />
+                        </React.Fragment>
+                    })}
+                    <PrimaryButton
+                        disabled={loading}
+                        onPress={handleOnShare}
+                    >
+                        {!loading && `Share`}
+                        {loading && <><Spinner color='white' mr={5} /><Text color='white'>Sharing...</Text></>}
+                    </PrimaryButton>
+                </>}
+                <Unspaced>
+                    <Dialog.Close asChild>
+                        <Button
+                            position="absolute"
+                            top={5}
+                            right={5}
+                            circular
+                            bg='transparent'
+                            icon={<Feather name='x' size={24} />}
+                        />
+                    </Dialog.Close>
+                </Unspaced>
             </Dialog.Content>
         </Dialog.Portal>
-    </Dialog>
+    </Dialog >
 }
 
 function DashboardScreen(props: PropsWithChildren & NativeStackScreenProps<any>): JSX.Element {
@@ -118,17 +247,12 @@ function DashboardScreen(props: PropsWithChildren & NativeStackScreenProps<any>)
         return () => onPressStopShare();
     }, []);
 
-    useEffect(() => {
-        console.log("ReactNativeBlobUtil.fs.dirs.DocumentDir", ReactNativeBlobUtil.fs.dirs.DocumentDir);
-        console.log("RNFS.DocumentDirectoryPath", RNFS.DocumentDirectoryPath);
-    }, []);
-
     const [showShare, setShowShare] = useState<boolean>(false);
 
     return <DrawerScreen
         active="home"
     >
-        <ShareDialog open={showShare} />
+        <ShareDialog open={showShare} onOpenChange={(open) => setShowShare(open)} link={shareLink} />
         <SafeAreaView style={{
             height: "100%",
             backgroundColor: "white"
@@ -163,14 +287,14 @@ function DashboardScreen(props: PropsWithChildren & NativeStackScreenProps<any>)
                 <XStack p={8} gap={4} style={{ position: "absolute", width: '100%', bottom: 24 }}>
                     <SecondaryButton bg={'white'} onPress={onPressStopShare} flex={0}>Cancel</SecondaryButton>
                     <PrimaryButton flex={1} onPress={() => {
-                        // setShowShare(true)
-                        if (Platform.OS == 'android') {
-                            ToastAndroid.showWithGravityAndOffset(`Shareable link: ${shareLink}`, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50); ToastAndroid
-                        } else {
-                            Alert.alert(`Shareable link: ${shareLink}`);
-                        }
+                        setShowShare(true);
+                        // if (Platform.OS == 'android') {
+                        //     ToastAndroid.showWithGravityAndOffset(`Shareable link: ${shareLink}`, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50); ToastAndroid
+                        // } else {
+                        //     Alert.alert(`Shareable link: ${shareLink}`);
+                        // }
                     }}>
-                        Share live location 🚧
+                        Share live location
                     </PrimaryButton>
                 </XStack>
             </ZStack>
