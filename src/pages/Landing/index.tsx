@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import InviteScreen from "./InviteScreen";
 import { Text } from "tamagui";
 import LoginScreen from "./Login";
+import React from "react";
 
 const NavigationStack = createNativeStackNavigator();
 

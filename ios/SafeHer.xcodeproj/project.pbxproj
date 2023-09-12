@@ -33,7 +33,6 @@
 		EC70857F2AA1624A001B3AC4 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC70856C2AA1624A001B3AC4 /* MaterialIcons.ttf */; };
 		EC7085802AA1624A001B3AC4 /* FontAwesome6_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC70856D2AA1624A001B3AC4 /* FontAwesome6_Solid.ttf */; };
 		EC7085822AA16260001B3AC4 /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC7085812AA16260001B3AC4 /* Roboto.ttf */; };
-		EC7085842AA163BF001B3AC4 /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC7085832AA163BF001B3AC4 /* Roboto.ttf */; };
 		ECCD64152AA00E92007BAA69 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECCD64142AA00E91007BAA69 /* Launch Screen.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -82,8 +81,7 @@
 		EC70856B2AA1624A001B3AC4 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		EC70856C2AA1624A001B3AC4 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		EC70856D2AA1624A001B3AC4 /* FontAwesome6_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome6_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome6_Solid.ttf"; sourceTree = "<group>"; };
-		EC7085812AA16260001B3AC4 /* Roboto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Roboto.ttf; path = ../assets/fonts/Roboto.ttf; sourceTree = "<group>"; };
-		EC7085832AA163BF001B3AC4 /* Roboto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Roboto.ttf; path = ../assets/fonts/Roboto.ttf; sourceTree = "<group>"; };
+		EC7085812AA16260001B3AC4 /* Roboto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Roboto.ttf; sourceTree = "<group>"; };
 		ECCD64142AA00E91007BAA69 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -159,6 +157,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				EC2744332AAF8815000B9643 /* Fonts */,
 				13B07FAE1A68108700A75B9A /* SafeHer */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* SafeHerTests */,
@@ -195,15 +194,21 @@
 		BD52803E4F04449D83E0B02C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				EC7085832AA163BF001B3AC4 /* Roboto.ttf */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		EC2744332AAF8815000B9643 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				EC7085812AA16260001B3AC4 /* Roboto.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		EC70855A2AA16213001B3AC4 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				EC7085812AA16260001B3AC4 /* Roboto.ttf */,
 				EC70856A2AA1624A001B3AC4 /* AntDesign.ttf */,
 				EC7085662AA1624A001B3AC4 /* Entypo.ttf */,
 				EC70855E2AA1624A001B3AC4 /* EvilIcons.ttf */,
@@ -341,7 +346,6 @@
 				EC7085822AA16260001B3AC4 /* Roboto.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				EC7085742AA1624A001B3AC4 /* Feather.ttf in Resources */,
-				EC7085842AA163BF001B3AC4 /* Roboto.ttf in Resources */,
 				EC7085772AA1624A001B3AC4 /* FontAwesome.ttf in Resources */,
 				EC70857C2AA1624A001B3AC4 /* FontAwesome6_Brands.ttf in Resources */,
 			);
@@ -585,7 +589,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = QBBKGSK28J;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SafeHer/Info.plist;
@@ -614,7 +618,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = QBBKGSK28J;
 				INFOPLIST_FILE = SafeHer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;

@@ -3,7 +3,7 @@ import { Platform } from "react-native";
 
 var RNFS = require('react-native-fs');
 
-function localPath(image: string): string {
+async function localPath(image: string): Promise<string> {
     let newPath: string;
 
     const fileName = image.split('/').pop();
@@ -19,17 +19,16 @@ function localPath(image: string): string {
     console.log(image, "to", newPath);
 
     // COPY the file
-    RNFS.copyFile(image, newPath)
+    return RNFS.copyFile(image, newPath)
         .then(() => {
             console.log('IMG COPIED!');
             console.log(newPath);
+            return newPath;
         })
         .catch((err: any) => {
             console.log('copy failed');
             console.log(err.message);
         });
-
-    return newPath;
 }
 
 export { localPath };

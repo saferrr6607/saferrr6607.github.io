@@ -497,6 +497,8 @@ PODS:
   - RNScreens (3.22.1):
     - React-Core
     - React-RCTImage
+  - RNSoundPlayer (0.13.2):
+    - React-Core
   - SocketRocket (0.6.1)
   - TextToSpeech (4.1.0):
     - React
@@ -584,6 +586,7 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNSoundPlayer (from `../node_modules/react-native-sound-player`)
   - TextToSpeech (from `../node_modules/react-native-tts`)
   - VisionCamera (from `../node_modules/react-native-vision-camera`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -709,6 +712,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSoundPlayer:
+    :path: "../node_modules/react-native-sound-player"
   TextToSpeech:
     :path: "../node_modules/react-native-tts"
   VisionCamera:
@@ -786,6 +791,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: c0d04458598fcb26052494ae23dda8f8f5162b13
   RNReanimated: f186e85d9f28c9383d05ca39e11dd194f59093ec
   RNScreens: 50ffe2fa2342eabb2d0afbe19f7c1af286bc7fb3
+  RNSoundPlayer: 369105c565b8fe6ea0a43fc882dc81eba444e842
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   TextToSpeech: b3aa777ff5585705f179c0a2436bfd0926d1716e
   VisionCamera: 523b49054bee9dace64189ab6631cb41e8b83fe0

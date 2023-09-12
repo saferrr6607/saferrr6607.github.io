@@ -20,7 +20,7 @@ import { AppContext } from "../../contexts/AppContext";
 import { setPath } from "react-native-reanimated/lib/types/lib/reanimated2/animation/styleAnimation";
 import ContactListItem from "../../components/ContactListItem";
 import { ContactPersonType } from "../../types/contacts";
-import { createSOSMsg, sendSMS } from "../../utils/sms";
+import { createShareMsg, createSOSMsg, sendSOS, shareLoc } from "../../utils/sms";
 var RNFS = require('react-native-fs');
 
 const DefaultButton = styled(Button, {
@@ -108,7 +108,7 @@ function ShareDialog(props: PropsWithChildren & DialogProps & { onOpenChange: Fu
     const handleOnShareLink = () => {
         onOpenChange(false);
         setPhase('initial');
-        const content = createSOSMsg(name, link);
+        const content = createShareMsg(name, link);
         Share.share({
             message: content,
         });
@@ -133,7 +133,7 @@ function ShareDialog(props: PropsWithChildren & DialogProps & { onOpenChange: Fu
         try {
             for (let contact of selected) {
                 if (contact?.phone_number) {
-                    const response = await sendSMS(contact?.phone_number, link, name);
+                    const response = await shareLoc(contact?.phone_number, link, name);
                 }
             }
         } catch (err) {
