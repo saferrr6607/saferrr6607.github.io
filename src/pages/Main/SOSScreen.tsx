@@ -221,7 +221,7 @@ function useSMS() {
                 const url = `https://www.google.com/maps/search/?api=1&query=${coor.latitude},${coor.longitude}`;
                 for (let item of my_contacts) {
                     if (item.phone_number) {
-                        // const response = await sendSOS(item.phone_number, url, name);
+                        const response = await sendSOS(item.phone_number, url, name);
                     }
                 }
             } catch (err) {

@@ -1,26 +1,21 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { DataStore } from "aws-amplify";
-import React, { PropsWithChildren, useContext, useEffect, useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Adapt, Button, Dialog, DialogProps, Separator, Sheet, Spinner, Stack, styled, Text, Unspaced, XStack, ZStack } from "tamagui";
-import { EmergencyContact, MedicalRecord } from "../../models";
-import { checkTorchPermission } from "../../utils/permissions.android";
-import DrawerScreen from "./components/DrawerScreen";
 import Geolocation from '@react-native-community/geolocation';
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import axios from "axios";
+import React, { PropsWithChildren, useContext, useEffect, useRef, useState } from "react";
+import { Dimensions, Platform, Share, StyleSheet } from "react-native";
 import MapView, { Region } from "react-native-maps";
-import { Alert, FlatList, Platform, Share, StyleSheet, ToastAndroid } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Feather from 'react-native-vector-icons/dist/Feather';
+import { Button, Dialog, DialogProps, Separator, Spinner, Stack, styled, Text, Unspaced, XStack, ZStack } from "tamagui";
 import PrimaryButton from "../../components/PrimaryButton";
 import SecondaryButton from "../../components/SecondaryButton";
-import axios from "axios";
-import { Text as RText } from 'react-native';
-import Feather from 'react-native-vector-icons/dist/Feather';
+import DrawerScreen from "./components/DrawerScreen";
 
-import ReactNativeBlobUtil from 'react-native-blob-util'
-import { AppContext } from "../../contexts/AppContext";
-import { setPath } from "react-native-reanimated/lib/types/lib/reanimated2/animation/styleAnimation";
 import ContactListItem from "../../components/ContactListItem";
+import { AppContext } from "../../contexts/AppContext";
 import { ContactPersonType } from "../../types/contacts";
-import { createShareMsg, createSOSMsg, sendSOS, shareLoc } from "../../utils/sms";
+import { alertUser } from "../../utils/alert";
+import { createShareMsg, shareLoc } from "../../utils/sms";
 var RNFS = require('react-native-fs');
 
 const DefaultButton = styled(Button, {
@@ -120,11 +115,7 @@ function ShareDialog(props: PropsWithChildren & DialogProps & { onOpenChange: Fu
         selected = selected.filter(item => Boolean(item));
 
         if (selected.length == 0) {
-            if (Platform.OS == 'android') {
-                ToastAndroid.showWithGravityAndOffset("Please select at least 1 emergency contact", ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
-            } else {
-                Alert.alert("Please select at least 1 emergency contact");
-            }
+            alertUser("Please select at least 1 emergency contact");
             return;
         }
 
@@ -247,7 +238,35 @@ function DashboardScreen(props: PropsWithChildren & NativeStackScreenProps<any>)
         return () => onPressStopShare();
     }, []);
 
+    const mapRef = useRef<MapView>(null);
+
     const [showShare, setShowShare] = useState<boolean>(false);
+    const onPressFileAReport = () => {
+        Geolocation.getCurrentPosition(async info => {
+            const coor = info.coords;
+            console.log(coor);
+            mapRef.current?.animateToRegion({
+                latitude: coor.latitude,
+                longitude: coor.longitude,
+                latitudeDelta: 0.004757,
+                longitudeDelta: 0.006866,
+            }, 500);
+            setTimeout(() => {
+                mapRef.current?.takeSnapshot({
+                    format: 'png',
+                    quality: 0.8,
+                    height: Dimensions.get('window').height * 0.50,
+                    result: 'file'
+                }).then(snapshot => {
+                    console.log(snapshot);
+                    navigation.navigate("Main.FileReport", {
+                        location: coor,
+                        image: snapshot,
+                    });
+                });
+            }, 550);
+        });
+    };
 
     return <DrawerScreen
         active="home"
@@ -262,6 +281,7 @@ function DashboardScreen(props: PropsWithChildren & NativeStackScreenProps<any>)
                 setMapbox({ width, height })
             }}>
                 {init && <MapView
+                    ref={mapRef}
                     initialRegion={initialCoor}
                     style={{ flex: 1 }}
                     provider='google'
@@ -273,7 +293,7 @@ function DashboardScreen(props: PropsWithChildren & NativeStackScreenProps<any>)
             {!shareMode && <Stack backgroundColor={"white"} p={16} gap={16}>
                 <DefaultButton bg="$emergency" onPress={gotoSOS}>Emergency SOS</DefaultButton>
                 <XStack gap={16}>
-                    <DefaultButton flex={1} bg="$file">File a report 🚧</DefaultButton>
+                    <DefaultButton flex={1} bg="$file" onPress={onPressFileAReport}>File a report</DefaultButton>
                     <DefaultButton flex={1} bg="$loc" onPress={onPressShare}>Share location</DefaultButton>
                 </XStack>
             </Stack>}
@@ -288,11 +308,6 @@ function DashboardScreen(props: PropsWithChildren & NativeStackScreenProps<any>)
                     <SecondaryButton bg={'white'} onPress={onPressStopShare} flex={0}>Cancel</SecondaryButton>
                     <PrimaryButton flex={1} onPress={() => {
                         setShowShare(true);
-                        // if (Platform.OS == 'android') {
-                        //     ToastAndroid.showWithGravityAndOffset(`Shareable link: ${shareLink}`, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50); ToastAndroid
-                        // } else {
-                        //     Alert.alert(`Shareable link: ${shareLink}`);
-                        // }
                     }}>
                         Share live location
                     </PrimaryButton>

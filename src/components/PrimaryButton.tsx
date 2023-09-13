@@ -6,7 +6,7 @@ const PrimaryButton = styled(Button, {
     backgroundColor: "$primary",
     fontWeight: "700",
     color: "white",
-    pressStyle: { opacity: 0.75 }
+    pressStyle: { opacity: 0.75 },
 });
 
 export default PrimaryButton;

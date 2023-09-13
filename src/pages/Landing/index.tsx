@@ -1,12 +1,27 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack";
 import InviteScreen from "./InviteScreen";
 import { Text } from "tamagui";
 import LoginScreen from "./Login";
-import React from "react";
+import React, { PropsWithChildren, useCallback, useContext, useEffect } from "react";
+import { AppContext } from "../../contexts/AppContext";
+import { useFocusEffect } from "@react-navigation/native";
 
 const NavigationStack = createNativeStackNavigator();
 
-function LandingNavigation(): JSX.Element {
+function LandingNavigation(props: PropsWithChildren & NativeStackScreenProps<any>): JSX.Element {
+
+    const app_ctx = useContext(AppContext);
+    const cognito = app_ctx?.cognito;
+    const { navigation } = props;
+
+    useFocusEffect(useCallback(() => {
+        if (cognito) {
+            navigation.replace('App.Main');
+        }
+        return () => {
+
+        }
+    }, [cognito]));
 
     return <NavigationStack.Navigator
         initialRouteName="Landing.Invite"

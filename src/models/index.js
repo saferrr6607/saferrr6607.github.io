@@ -4,9 +4,13 @@ import { schema } from './schema';
 
 
 
-const { MedicalRecord, EmergencyContact } = initSchema(schema);
+const { Notification, LocationReport, IncidentReport, MedicalRecord, EmergencyContact, UserVerification } = initSchema(schema);
 
 export {
+  Notification,
+  LocationReport,
+  IncidentReport,
   MedicalRecord,
-  EmergencyContact
+  EmergencyContact,
+  UserVerification
 };

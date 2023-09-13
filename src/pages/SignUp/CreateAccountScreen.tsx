@@ -1,15 +1,15 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React, { PropsWithChildren, useCallback, useContext, useEffect, useReducer, useState } from "react";
-import { ToastAndroid } from "react-native";
-import { Input, ScrollView, Stack, Text, styled } from "tamagui";
-import { HeaderText, InputWithError, SubHeader } from "./recipe";
-import PrimaryButton from "../../components/PrimaryButton";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { FormContext } from ".";
-import { AccountErrorType } from "./types";
-import { Auth } from "aws-amplify";
 import { useFocusEffect } from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { Auth } from "aws-amplify";
+import React, { PropsWithChildren, useCallback, useContext, useReducer } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { ScrollView, Stack, Text } from "tamagui";
+import { FormContext } from ".";
+import PrimaryButton from "../../components/PrimaryButton";
 import { AppContext } from "../../contexts/AppContext";
+import { alertUser } from "../../utils/alert";
+import { HeaderText, InputWithError, SubHeader } from "./recipe";
+import { AccountErrorType } from "./types";
 
 type reducerActionType = {
     type: string,
@@ -117,7 +117,7 @@ function CreateAccountScreen(props: PropsWithChildren & NativeStackScreenProps<a
                 })
                 .catch(err => {
                     console.log("err", err);
-                    ToastAndroid.showWithGravityAndOffset(err.message, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
+                    alertUser(err.message);
                 });
             // navigation.navigate("SignUp.MedicalRecord");
         }

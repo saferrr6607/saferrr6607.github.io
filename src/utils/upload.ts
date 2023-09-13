@@ -37,7 +37,7 @@ function getImagePathIOS(path: string): string {
     return path.replace("/private/", "file:///");
 }
 
-function getImagePath(path: string): string {
+export function getImagePath(path: string): string {
     let getPath = Platform.select({
         android: () => getImagePathAndroid(path),
         ios: () => getImagePathIOS(path),
@@ -46,11 +46,11 @@ function getImagePath(path: string): string {
     return getPath();
 }
 
-export async function upload(file: string, folder = 'sos') {
+export async function upload(file: string, folder = 'sos', ignoreTransform = false) {
 
     try {
 
-        const path = getImagePath(file);
+        const path = ignoreTransform ? file : getImagePath(file);
         console.log(path);
         // const path = file;
         const fileBlob = await uriToBlob(path);
@@ -59,7 +59,7 @@ export async function upload(file: string, folder = 'sos') {
 
         const s3_key = `${folder}/${fs_stat.filename}`;
 
-        await Storage.put(s3_key, fileBlob, {
+        return Storage.put(s3_key, fileBlob, {
             level: 'protected',
             contentType: mime_type,
         });

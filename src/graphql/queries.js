@@ -1,6 +1,174 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getLocationReport = /* GraphQL */ `
+  query GetLocationReport($id: ID!) {
+    getLocationReport(id: $id) {
+      id
+      coordinates
+      location
+      datetime
+      ratings
+      description
+      media
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+      __typename
+    }
+  }
+`;
+export const listLocationReports = /* GraphQL */ `
+  query ListLocationReports(
+    $filter: ModelLocationReportFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listLocationReports(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        coordinates
+        location
+        datetime
+        ratings
+        description
+        media
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
+export const syncLocationReports = /* GraphQL */ `
+  query SyncLocationReports(
+    $filter: ModelLocationReportFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncLocationReports(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        coordinates
+        location
+        datetime
+        ratings
+        description
+        media
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
+export const getIncidentReport = /* GraphQL */ `
+  query GetIncidentReport($id: ID!) {
+    getIncidentReport(id: $id) {
+      id
+      coordinates
+      location
+      datetime
+      category
+      description
+      media
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+      __typename
+    }
+  }
+`;
+export const listIncidentReports = /* GraphQL */ `
+  query ListIncidentReports(
+    $filter: ModelIncidentReportFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listIncidentReports(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        coordinates
+        location
+        datetime
+        category
+        description
+        media
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
+export const syncIncidentReports = /* GraphQL */ `
+  query SyncIncidentReports(
+    $filter: ModelIncidentReportFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncIncidentReports(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        coordinates
+        location
+        datetime
+        category
+        description
+        media
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
 export const getMedicalRecord = /* GraphQL */ `
   query GetMedicalRecord($id: ID!) {
     getMedicalRecord(id: $id) {
@@ -107,6 +275,7 @@ export const getEmergencyContact = /* GraphQL */ `
       name
       phone_number
       status
+      phone_number_id
       createdAt
       updatedAt
       _version
@@ -133,6 +302,7 @@ export const listEmergencyContacts = /* GraphQL */ `
         name
         phone_number
         status
+        phone_number_id
         createdAt
         updatedAt
         _version
@@ -165,6 +335,95 @@ export const syncEmergencyContacts = /* GraphQL */ `
         name
         phone_number
         status
+        phone_number_id
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
+export const getUserVerification = /* GraphQL */ `
+  query GetUserVerification($id: ID!) {
+    getUserVerification(id: $id) {
+      id
+      id_name
+      id_mime_type
+      id_key
+      selfie_name
+      selfie_mime_type
+      selfie_key
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+      __typename
+    }
+  }
+`;
+export const listUserVerifications = /* GraphQL */ `
+  query ListUserVerifications(
+    $filter: ModelUserVerificationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUserVerifications(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        id_name
+        id_mime_type
+        id_key
+        selfie_name
+        selfie_mime_type
+        selfie_key
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
+export const syncUserVerifications = /* GraphQL */ `
+  query SyncUserVerifications(
+    $filter: ModelUserVerificationFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncUserVerifications(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        id_name
+        id_mime_type
+        id_key
+        selfie_name
+        selfie_mime_type
+        selfie_key
         createdAt
         updatedAt
         _version

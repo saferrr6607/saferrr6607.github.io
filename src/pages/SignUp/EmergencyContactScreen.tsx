@@ -1,17 +1,18 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React, { memo, PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react";
-import { ActivityIndicator, Alert, FlatList, GestureResponderEvent, Platform, ToastAndroid } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Button, ButtonIcon, Input, Separator, Spinner, Stack, Text, XStack, YStack, getTokens } from "tamagui";
-import { HeaderText } from "./recipe";
-import PrimaryButton from "../../components/PrimaryButton";
-import Icon from 'react-native-vector-icons/dist/AntDesign';
-import Contacts from "react-native-contacts";
-import { checkContactPermission } from "../../utils/permissions";
-import { EmergencyContact } from "../../models";
 import { DataStore } from "aws-amplify";
-import { ContactPersonType } from "../../types/contacts";
+import React, { PropsWithChildren, useCallback, useEffect, useState } from "react";
+import { FlatList } from "react-native";
+import Contacts from "react-native-contacts";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Icon from 'react-native-vector-icons/dist/AntDesign';
+import { Button, Input, Separator, Stack, Text, XStack, YStack } from "tamagui";
 import ContactListItem from "../../components/ContactListItem";
+import PrimaryButton from "../../components/PrimaryButton";
+import { EmergencyContact } from "../../models";
+import { ContactPersonType } from "../../types/contacts";
+import { alertUser } from "../../utils/alert";
+import { checkContactPermission } from "../../utils/permissions";
+import { HeaderText } from "./recipe";
 
 function EmptyList(props: PropsWithChildren & { loading: boolean, contactsDisabled: boolean, searching: boolean }): JSX.Element {
     const { loading, contactsDisabled, searching } = props;
@@ -155,11 +156,7 @@ function EmergencyContactScreen(props: PropsWithChildren & NativeStackScreenProp
         selected = selected.filter(item => Boolean(item));
 
         if (selected.length == 0) {
-            if (Platform.OS == 'android') {
-                ToastAndroid.showWithGravityAndOffset("Please select at least 1 emergency contact", ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
-            } else {
-                Alert.alert("Please select at least 1 emergency contact");
-            }
+            alertUser("Please select at least 1 emergency contact");
             return;
         }
 
