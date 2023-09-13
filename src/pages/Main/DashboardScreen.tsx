@@ -4,7 +4,6 @@ import axios from "axios";
 import React, { PropsWithChildren, useContext, useEffect, useRef, useState } from "react";
 import { Dimensions, Platform, Share, StyleSheet } from "react-native";
 import MapView, { Region } from "react-native-maps";
-import { SafeAreaView } from "react-native-safe-area-context";
 import Feather from 'react-native-vector-icons/dist/Feather';
 import { Button, Dialog, DialogProps, Separator, Spinner, Stack, styled, Text, Unspaced, XStack, ZStack } from "tamagui";
 import PrimaryButton from "../../components/PrimaryButton";
@@ -16,6 +15,7 @@ import { AppContext } from "../../contexts/AppContext";
 import { ContactPersonType } from "../../types/contacts";
 import { alertUser } from "../../utils/alert";
 import { createShareMsg, shareLoc } from "../../utils/sms";
+import { SafeAreaView } from 'react-navigation';
 var RNFS = require('react-native-fs');
 
 const DefaultButton = styled(Button, {

@@ -1,12 +1,12 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { DataStore, SortDirection } from "aws-amplify";
 import React, { PropsWithChildren, useCallback, useEffect, useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Circle, Square, Stack, Text, XStack } from "tamagui";
 import { LazyNotification, Notification } from "../../models";
 import moment from "moment";
 import { FlatList } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/dist/FontAwesome';
+import { SafeAreaView } from "react-navigation";
 
 function NotifIcon(props) {
 

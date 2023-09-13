@@ -37,6 +37,8 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>This app would like to take pictures of your surrounding during emergencies.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app would like to access your gallery which will be used when filing a report.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>This app would like to view your contacts as reference for your would-be emergency contacts.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
@@ -45,7 +47,6 @@
 	<string>This app needs to identify your location which will be shared to your emergency contacts in case of emergency.</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Roboto.ttf</string>
 		<string>AntDesign.ttf</string>
 		<string>react-native-torch</string>
 		<string>Entypo.ttf</string>

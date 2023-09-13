@@ -6,15 +6,16 @@ import React, { PropsWithChildren, useContext, useEffect, useState } from "react
 import { Dimensions, Platform, StyleSheet } from "react-native";
 import { createThumbnail } from "react-native-create-thumbnail";
 import { launchImageLibrary } from 'react-native-image-picker';
-import { SafeAreaView } from "react-native-safe-area-context";
+
 import FontAwesome from 'react-native-vector-icons/dist/FontAwesome';
+import { SafeAreaView } from "react-navigation";
 import { Circle, Image, Input, Progress, ScrollView, Spinner, Square, Stack, styled, Text, TextArea, XStack } from "tamagui";
 import PrimaryButton from "../../components/PrimaryButton";
 import { IncidentReport } from "../../models";
 import { UploadFileType } from "../../types/upload";
 import { alertUser } from "../../utils/alert";
 import { pushNotification } from "../../utils/notification";
-import { upload } from "../../utils/upload";
+import { cleanIOSPath, upload } from "../../utils/upload";
 import { FileReportContext } from "./index";
 
 const InputLabel = styled(Text, {
@@ -189,8 +190,11 @@ function FileIncidentScreen(props: PropsWithChildren & NativeStackScreenProps<an
 
             for (let photo of photos) {
                 const _upload = photo.upload;
-                console.log(_upload);
-                const s3 = await upload(_upload.path, 'incident-report', true);
+                let path = _upload.path;
+                if (Platform.OS == 'ios') {
+                    path = cleanIOSPath(path, 'file://');
+                }
+                const s3 = await upload(path, 'incident-report', true);
                 const item = {
                     s3_key: s3.key,
                     mime_type: _upload.mime_type,
