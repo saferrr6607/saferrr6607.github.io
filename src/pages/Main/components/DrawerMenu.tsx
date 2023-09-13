@@ -31,11 +31,12 @@ function DrawerMenu(props: PropsWithChildren & { active: string }) {
     const gotoDashboard = () => navigation.navigate("Main.Dashboard");
     const gotoTest = () => navigation.navigate("Main.Test");
     const gotoTerms = () => navigation.navigate("Main.TermsPrivacy");
+    const gotoNotification = () => navigation.navigate("Main.Notifications");
 
     return <Stack style={{ height: "100%", paddingBottom: 10, backgroundColor: "white" }}>
         <TouchableOpacity onPress={gotoDashboard}><ListItem bg={atHome ? "$secondary" : "initial"} icon={<Icon name="home" size={16} />}>Dashboard</ListItem></TouchableOpacity>
         <Separator my={12} />
-        <TouchableOpacity disabled={true}><ListItem bg={atNotif ? "$secondary" : "initial"} icon={<Icon name="bell" size={16} />}>Notifications 🚧</ListItem></TouchableOpacity>
+        <TouchableOpacity onPress={gotoNotification}><ListItem bg={atNotif ? "$secondary" : "initial"} icon={<Icon name="bell" size={16} />}>Notifications</ListItem></TouchableOpacity>
         {Platform.OS == 'android' && <TouchableOpacity onPress={gotoTest}><ListItem bg={atTestSite ? "$secondary" : "initial"} icon={<Icon name="tool" size={16} />}>Testing Space</ListItem></TouchableOpacity>}
         <View flex={1} />
         <TouchableOpacity onPress={gotoTerms}><ListItem bg={atTermsOfUse ? "$secondary" : "initial"} icon={<Icon name="book" size={16} />}>Terms of Use and Privacy Policy</ListItem></TouchableOpacity>

@@ -1,0 +1,26 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-safeher-dev-235630-authRole",
+      "UnauthRoleArn": "arn:aws:iam::404885533412:role/amplify-safeher-dev-235630-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::404885533412:role/amplify-safeher-dev-235630-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-safeher-dev-235630-deployment",
+      "UnauthRoleName": "amplify-safeher-dev-235630-unauthRole",
+      "StackName": "amplify-safeher-dev-235630",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:404885533412:stack/amplify-safeher-dev-235630/d1c7d160-2fba-11ee-83ae-02eef778e902",
+      "AmplifyAppId": "d383m5t2ak2034"
+    },
+    "categories": {
+      "auth": {
+        "safeher2fc41a60": {}
+      },
+      "api": {
+        "safeher": {}
+      },
+      "storage": {
+        "s308ddd210": {}
+      }
+    }
+  }
+}

@@ -1,15 +1,13 @@
+import { useFocusEffect } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react";
+import React, { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react";
+import { NativeModules, PermissionsAndroid } from "react-native";
+import AudioRecord from "react-native-audio-record";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Stack, Text } from "tamagui";
-import Icon from 'react-native-vector-icons/dist/Feather';
-import DrawerMenu from "./components/DrawerMenu";
-import { NativeModules, PermissionsAndroid, Pressable, ToastAndroid } from "react-native";
-import { Drawer } from "react-native-drawer-layout";
 import PrimaryButton from "../../components/PrimaryButton";
-import AudioRecord from "react-native-audio-record";
-import { checkAudioPermission, checkStoragePermission } from "../../utils/permissions.android";
-import { useFocusEffect } from "@react-navigation/native";
+import { alertUser } from "../../utils/alert";
+import { checkAudioPermission } from "../../utils/permissions.android";
 import DrawerScreen from "./components/DrawerScreen";
 
 const { MFCCModule } = NativeModules;
@@ -36,7 +34,7 @@ class AudioRecorder {
                 // startRecording();
                 AudioRecord.init(audioConfig);
             } else {
-                ToastAndroid.showWithGravityAndOffset("Missing permissions!", ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
+                alertUser("Missing permissions!");
             }
         } catch (error) {
             console.log('Error requesting permissions: ', error);
@@ -54,7 +52,7 @@ class AudioRecorder {
             ) {
                 AudioRecord.start();
             } else {
-                ToastAndroid.showWithGravityAndOffset("Give permission to microphone!", ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
+                alertUser("Give permission to microphone!");
             }
         } catch (error) {
             console.log('Error requesting permissions: ', error);

@@ -1,0 +1,62 @@
+type Notification @model @auth(rules: [{allow: private}, {allow: owner}]) {
+  id: ID!
+  title: String
+  description: String
+  timestamp: AWSDateTime
+  metadata: AWSJSON
+  type: String
+}
+
+type LocationReport @model @auth(rules: [{allow: private}, {allow: owner}]) {
+  id: ID!
+  coordinates: AWSJSON
+  location: String
+  datetime: String
+  ratings: [AWSJSON]
+  description: String
+  media: [AWSJSON]
+}
+
+type IncidentReport @model @auth(rules: [{allow: private}, {allow: owner}]) {
+  id: ID!
+  coordinates: AWSJSON
+  location: String
+  datetime: String
+  category: [String]
+  description: String
+  media: [AWSJSON]
+}
+
+type MedicalRecord @model @auth(rules: [{allow: private}, {allow: owner}]) {
+  id: ID!
+  date_of_birth: String
+  medical_condition: String
+  medical_notes: String
+  medications: String
+  blood_type: String
+  organ_donor: String
+  weight: String
+  height: String
+  skin_color: String
+  hair_color: String
+  tattoo: String
+}
+
+type EmergencyContact @model @auth(rules: [{allow: private}, {allow: owner}]) {
+  id: ID!
+  name: String
+  phone_number: String
+  status: Int
+  phone_number_id: String
+}
+
+type UserVerification @model @auth(rules: [{allow: private}, {allow: owner}]) {
+  id: ID!
+  id_name: String
+  id_mime_type: String
+  id_key: String
+  selfie_name: String
+  selfie_mime_type: String
+  selfie_key: String
+}
+ 

@@ -2,8 +2,9 @@ import Geolocation from "@react-native-community/geolocation";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { PropsWithChildren, useContext, useEffect, useMemo, useRef, useState } from "react";
-import { BackHandler, StyleSheet, useWindowDimensions } from "react-native";
+import { BackHandler, Platform, StyleSheet, useWindowDimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import SoundPlayer from "react-native-sound-player";
 import Torch from 'react-native-torch';
 import Tts from "react-native-tts";
 import FIcon from 'react-native-vector-icons/dist/FontAwesome5';
@@ -13,7 +14,8 @@ import AlertButton from "../../components/AlertButton";
 import { AppContext } from "../../contexts/AppContext";
 import { EmergencyContact } from "../../models";
 import { localPath } from "../../utils/files";
-import { sendSMS } from "../../utils/sms";
+import { sendSOS } from "../../utils/sms";
+import { upload } from "../../utils/upload";
 
 const Text = styled(TamagText, {
     color: 'white'
@@ -116,20 +118,72 @@ function useFlashingLight() {
 
 }
 
-function useTTS() {
+function useAudioPlayback() {
 
     useEffect(() => {
 
         let mounted = true;
 
         const speak = () => {
-            Tts.speak(
-                "Stop harassing me. Police have been contacted and are on their way.",
-            )
+            SoundPlayer.playSoundFile('sample', 'wav');
         }
 
+        speak();
+
+        SoundPlayer.addEventListener('FinishedPlaying', () => {
+            SoundPlayer.stop();
+            setTimeout(() => {
+                if (mounted) {
+                    speak();
+                }
+            }, 1500);
+        })
+
+        return () => {
+            mounted = false;
+            SoundPlayer.stop();
+        }
+
+    }, []);
+
+}
+
+const speech = [
+    "Hey! Stop harassing me!",
+    "Stop it. Right now!",
+    "I already contacted the authorities!"
+] as const;
+type SpeechType = typeof speech[number];
+function useTTS() {
+
+    const [speakCount, setSpeakCount] = useState<number>(0);
+
+    const speak = (index: number) => {
+        Tts.speak(speech[index % speech.length],);
+    }
+
+    const increment = () => {
+        setSpeakCount(c => c + 1);
+    }
+
+    useEffect(() => {
+        let mounted = true;
+
+        if (mounted) {
+            speak(speakCount);
+        }
+
+        return function () {
+            Tts.stop();
+        }
+    }, [speakCount]);
+
+    useEffect(() => {
+
+        let mounted = true;
+
         Tts.getInitStatus()
-            .then(() => speak())
+            .then(() => speak(0))
             .catch(err => {
                 console.log("err", err);
             })
@@ -137,17 +191,16 @@ function useTTS() {
         Tts.addEventListener('tts-finish', () => {
             Tts.stop();
             setTimeout(() => {
-                if (mounted) {
-                    speak()
-                }
+                increment();
             }, 1500);
         });
 
         return () => {
             mounted = false;
             Tts.stop();
+            setSpeakCount(0);
         }
-    }, []);
+    }, [setSpeakCount]);
 
 }
 
@@ -157,6 +210,7 @@ function useSMS() {
     const app_ctx = useContext(AppContext);
     const my_contacts: Array<EmergencyContact> = app_ctx?.myContacts ?? [];
     const me = app_ctx?.cognito ?? null;
+    const name = me?.name ?? '';
 
     const [canSend, setCanSend] = useState<boolean>(false);
 
@@ -167,7 +221,7 @@ function useSMS() {
                 const url = `https://www.google.com/maps/search/?api=1&query=${coor.latitude},${coor.longitude}`;
                 for (let item of my_contacts) {
                     if (item.phone_number) {
-                        const response = await sendSMS(item.phone_number, url);
+                        const response = await sendSOS(item.phone_number, url, name);
                     }
                 }
             } catch (err) {
@@ -261,7 +315,10 @@ function CameraModule(props: PropsWithChildren & { mount: boolean, requestUnmoun
             })
                 .then(photo => {
                     console.log(photo);
-                    localPath(photo.path);
+                    upload(photo.path.substring(1))
+                        .catch(() => {
+                            return localPath(photo.path);
+                        });
                     timeout = setTimeout(() => {
                         if (mounted) {
                             afterCapture();
@@ -310,6 +367,7 @@ function SOSScreen(props: PropsWithChildren & NativeStackScreenProps<any>): JSX.
 
     const [startFlashing, stopFlashing] = useFlashingLight();
     useTTS();
+    // useAudioPlayback();
 
     const canSend = useSMS();
 
