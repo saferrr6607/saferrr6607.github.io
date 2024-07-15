@@ -1,6 +1,6 @@
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp, createNativeStackNavigator } from "@react-navigation/native-stack";
-import { DataStore } from "aws-amplify";
+import { Auth, DataStore } from "aws-amplify";
 import React, { PropsWithChildren, useContext, useEffect, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import SplashScreen from "react-native-splash-screen";
@@ -10,6 +10,8 @@ import LandingNavigation from "./src/pages/Landing";
 import MainNavigation from "./src/pages/Main";
 import SignUpNavigation from "./src/pages/SignUp";
 import { checkAudioPermission, checkContactPermission, checkFineLocPermission, checkMultiplePermissions } from "./src/utils/permissions.android";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { initializeSafeWords } from "./src/services/safeWords";
 
 const Stack = createNativeStackNavigator();
 
@@ -66,7 +68,7 @@ function App(): JSX.Element {
             if (user_state == 'signup') {
                 starting_point = "";
             } else {
-                starting_point = "App.Main";
+                starting_point = "App.Landing";
             }
         } else {
             starting_point = "App.Landing";
@@ -97,10 +99,27 @@ function App(): JSX.Element {
 
     }, [isLoggedIn, user_state]);
 
+    useEffect(() => {
+        initializeSafeWords()
+            .then(resp => {
+            })
+            .catch(err => {
+            });
+    }, []);
+
+    useEffect(() => {
+        Auth.currentSession()
+            .then(current => {
+                console.log(current);
+            });
+    }, []);
+
     return <GestureHandlerRootView style={{ height: '100%' }}>
-        <NavigationContainer>
-            <AppNavigation startPoint={startingPoint} />
-        </NavigationContainer>
+        <SafeAreaProvider>
+            <NavigationContainer>
+                <AppNavigation startPoint={startingPoint} />
+            </NavigationContainer>
+        </SafeAreaProvider>
     </GestureHandlerRootView>
 }
 

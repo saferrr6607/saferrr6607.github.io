@@ -3,6 +3,10 @@ import { Platform } from "react-native";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import * as mime from 'react-native-mime-types';
 
+export function cleanIOSPath(path: string, target = 'file:///private'): string {
+    return path.substring(path.indexOf(target) + target.length);
+}
+
 export function uriToBlob(uri: string): Promise<Blob> {
     return new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();

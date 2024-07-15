@@ -1,6 +1,72 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createNotification = /* GraphQL */ `
+  mutation CreateNotification(
+    $input: CreateNotificationInput!
+    $condition: ModelNotificationConditionInput
+  ) {
+    createNotification(input: $input, condition: $condition) {
+      id
+      title
+      description
+      timestamp
+      metadata
+      type
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const updateNotification = /* GraphQL */ `
+  mutation UpdateNotification(
+    $input: UpdateNotificationInput!
+    $condition: ModelNotificationConditionInput
+  ) {
+    updateNotification(input: $input, condition: $condition) {
+      id
+      title
+      description
+      timestamp
+      metadata
+      type
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const deleteNotification = /* GraphQL */ `
+  mutation DeleteNotification(
+    $input: DeleteNotificationInput!
+    $condition: ModelNotificationConditionInput
+  ) {
+    deleteNotification(input: $input, condition: $condition) {
+      id
+      title
+      description
+      timestamp
+      metadata
+      type
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
 export const createLocationReport = /* GraphQL */ `
   mutation CreateLocationReport(
     $input: CreateLocationReportInput!
@@ -8,18 +74,19 @@ export const createLocationReport = /* GraphQL */ `
   ) {
     createLocationReport(input: $input, condition: $condition) {
       id
+      report_type
       coordinates
       location
       datetime
       ratings
       description
       media
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
       __typename
     }
   }
@@ -31,18 +98,19 @@ export const updateLocationReport = /* GraphQL */ `
   ) {
     updateLocationReport(input: $input, condition: $condition) {
       id
+      report_type
       coordinates
       location
       datetime
       ratings
       description
       media
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
       __typename
     }
   }
@@ -54,18 +122,19 @@ export const deleteLocationReport = /* GraphQL */ `
   ) {
     deleteLocationReport(input: $input, condition: $condition) {
       id
+      report_type
       coordinates
       location
       datetime
       ratings
       description
       media
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
       __typename
     }
   }
@@ -77,18 +146,19 @@ export const createIncidentReport = /* GraphQL */ `
   ) {
     createIncidentReport(input: $input, condition: $condition) {
       id
+      report_type
       coordinates
       location
       datetime
       category
       description
       media
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
       __typename
     }
   }
@@ -100,18 +170,19 @@ export const updateIncidentReport = /* GraphQL */ `
   ) {
     updateIncidentReport(input: $input, condition: $condition) {
       id
+      report_type
       coordinates
       location
       datetime
       category
       description
       media
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
       __typename
     }
   }
@@ -123,18 +194,19 @@ export const deleteIncidentReport = /* GraphQL */ `
   ) {
     deleteIncidentReport(input: $input, condition: $condition) {
       id
+      report_type
       coordinates
       location
       datetime
       category
       description
       media
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
       __typename
     }
   }
@@ -157,12 +229,12 @@ export const createMedicalRecord = /* GraphQL */ `
       skin_color
       hair_color
       tattoo
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
       __typename
     }
   }
@@ -185,12 +257,12 @@ export const updateMedicalRecord = /* GraphQL */ `
       skin_color
       hair_color
       tattoo
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
       __typename
     }
   }
@@ -213,12 +285,12 @@ export const deleteMedicalRecord = /* GraphQL */ `
       skin_color
       hair_color
       tattoo
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
       __typename
     }
   }
@@ -234,12 +306,12 @@ export const createEmergencyContact = /* GraphQL */ `
       phone_number
       status
       phone_number_id
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
       __typename
     }
   }
@@ -255,12 +327,12 @@ export const updateEmergencyContact = /* GraphQL */ `
       phone_number
       status
       phone_number_id
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
       __typename
     }
   }
@@ -276,12 +348,12 @@ export const deleteEmergencyContact = /* GraphQL */ `
       phone_number
       status
       phone_number_id
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
       __typename
     }
   }
@@ -299,12 +371,12 @@ export const createUserVerification = /* GraphQL */ `
       selfie_name
       selfie_mime_type
       selfie_key
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
       __typename
     }
   }
@@ -322,12 +394,12 @@ export const updateUserVerification = /* GraphQL */ `
       selfie_name
       selfie_mime_type
       selfie_key
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
       __typename
     }
   }
@@ -345,12 +417,135 @@ export const deleteUserVerification = /* GraphQL */ `
       selfie_name
       selfie_mime_type
       selfie_key
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const createSafeWords = /* GraphQL */ `
+  mutation CreateSafeWords(
+    $input: CreateSafeWordsInput!
+    $condition: ModelSafeWordsConditionInput
+  ) {
+    createSafeWords(input: $input, condition: $condition) {
+      id
+      safe_word
+      enabled
+      status
       owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const updateSafeWords = /* GraphQL */ `
+  mutation UpdateSafeWords(
+    $input: UpdateSafeWordsInput!
+    $condition: ModelSafeWordsConditionInput
+  ) {
+    updateSafeWords(input: $input, condition: $condition) {
+      id
+      safe_word
+      enabled
+      status
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const deleteSafeWords = /* GraphQL */ `
+  mutation DeleteSafeWords(
+    $input: DeleteSafeWordsInput!
+    $condition: ModelSafeWordsConditionInput
+  ) {
+    deleteSafeWords(input: $input, condition: $condition) {
+      id
+      safe_word
+      enabled
+      status
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const createAccountSettings = /* GraphQL */ `
+  mutation CreateAccountSettings(
+    $input: CreateAccountSettingsInput!
+    $condition: ModelAccountSettingsConditionInput
+  ) {
+    createAccountSettings(input: $input, condition: $condition) {
+      id
+      enableBiometricLogin
+      enableFaceIdLogin
+      faceIDKey
+      enableSafeWords
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const updateAccountSettings = /* GraphQL */ `
+  mutation UpdateAccountSettings(
+    $input: UpdateAccountSettingsInput!
+    $condition: ModelAccountSettingsConditionInput
+  ) {
+    updateAccountSettings(input: $input, condition: $condition) {
+      id
+      enableBiometricLogin
+      enableFaceIdLogin
+      faceIDKey
+      enableSafeWords
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const deleteAccountSettings = /* GraphQL */ `
+  mutation DeleteAccountSettings(
+    $input: DeleteAccountSettingsInput!
+    $condition: ModelAccountSettingsConditionInput
+  ) {
+    deleteAccountSettings(input: $input, condition: $condition) {
+      id
+      enableBiometricLogin
+      enableFaceIdLogin
+      faceIDKey
+      enableSafeWords
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }

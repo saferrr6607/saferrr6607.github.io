@@ -5,6 +5,7 @@ import LoginScreen from "./Login";
 import React, { PropsWithChildren, useCallback, useContext, useEffect } from "react";
 import { AppContext } from "../../contexts/AppContext";
 import { useFocusEffect } from "@react-navigation/native";
+import ConfirmLoginScreen from "./ConfirmLoginScreen";
 
 const NavigationStack = createNativeStackNavigator();
 
@@ -16,7 +17,7 @@ function LandingNavigation(props: PropsWithChildren & NativeStackScreenProps<any
 
     useFocusEffect(useCallback(() => {
         if (cognito) {
-            navigation.replace('App.Main');
+            navigation.replace('Confirm.Login');
         }
         return () => {
 
@@ -31,6 +32,7 @@ function LandingNavigation(props: PropsWithChildren & NativeStackScreenProps<any
     >
         <NavigationStack.Screen name="Landing.Invite" component={InviteScreen} />
         <NavigationStack.Screen name="Invite.Login" component={LoginScreen} />
+        <NavigationStack.Screen name="Confirm.Login" component={ConfirmLoginScreen} />
     </NavigationStack.Navigator>
 
 }

@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "paths": {
+    "/verify-signature": {
+      "name": "/verify-signature",
+      "lambdaFunction": "safehera6944f9f",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update"
+        ]
+      }
+    }
+  }
+}

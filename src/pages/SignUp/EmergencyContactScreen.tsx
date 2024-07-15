@@ -12,6 +12,7 @@ import { EmergencyContact } from "../../models";
 import { ContactPersonType } from "../../types/contacts";
 import { alertUser } from "../../utils/alert";
 import { checkContactPermission } from "../../utils/permissions";
+
 import { HeaderText } from "./recipe";
 
 function EmptyList(props: PropsWithChildren & { loading: boolean, contactsDisabled: boolean, searching: boolean }): JSX.Element {
@@ -44,7 +45,10 @@ const pullContacts = async (): Promise<PullContactType> => {
             const _list = await Contacts.getAll();
             for (let j = 0; j < _list.length; j++) {
                 const item = _list[j];
-                const display_name = item.displayName;
+                let display_name = item.displayName;
+                if (!display_name) {
+                    display_name = `${item.givenName} ${item.familyName}`;
+                }
                 const phone_numbers = item.phoneNumbers;
                 for (let num of phone_numbers) {
                     let phone_number = num.number.replace(/[ \(\)]/g, "");
@@ -76,8 +80,12 @@ const pullContacts = async (): Promise<PullContactType> => {
         console.log("err", err);
     }
 
+    const sorted_list = list.sort(function (a, b) {
+        return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+    });
+
     return {
-        list,
+        list: sorted_list,
         contactsDisabled
     };
 }

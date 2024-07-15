@@ -121,6 +121,10 @@ function TestScreen(props: PropsWithChildren & NativeStackScreenProps<any>): JSX
                     if (res == "isolated-screams") { _res = "scream" }
                     else { _res = "not-scream" }
                     setState("identified-" + _res);
+
+                    if (_res == 'scream') {
+                        navigation.navigate("Main.SOS");
+                    }
                 });
             }
         }

@@ -9,7 +9,7 @@ import FontAwesome from 'react-native-vector-icons/dist/FontAwesome';
 import { Camera, useCameraDevices } from "react-native-vision-camera";
 import DocumentPicker from 'react-native-document-picker'
 import * as mime from 'react-native-mime-types';
-import { getImagePath, upload, uriToBlob } from "../../utils/upload";
+import { cleanIOSPath, getImagePath, upload, uriToBlob } from "../../utils/upload";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import PdfThumbnail from "react-native-pdf-thumbnail";
 import { alertUser } from "../../utils/alert";
@@ -73,11 +73,17 @@ function IDScreen(props: PropsWithChildren & DefaultPhaseScreenProps & { idFile:
                     const uri = doc.uri;
                     let path = uri;
 
+                    console.log(JSON.stringify(doc, null, 3));
+                    console.log('upload id', path);
+
                     if (uri.startsWith('content://')) {
                         const fileNameAndExtension = doc.name;
                         path = `${RNFS.TemporaryDirectoryPath}/${fileNameAndExtension}`
 
                         await RNFS.copyFile(uri, path)
+                    }
+                    if (Platform.OS == 'ios') {
+                        path = cleanIOSPath(path);
                     }
 
                     const fs_stat = await ReactNativeBlobUtil.fs.stat(path)
@@ -199,7 +205,7 @@ function FaceScreen(props: PropsWithChildren & DefaultPhaseScreenProps & { selfi
         <Text lineHeight={12 * 1.25} fontSize={12} fontWeight="500" color="$textSecondary">
             To validate your identity, we require you to take a selfie.
         </Text>
-        <Stack style={{ flex: 1 }} my={10}>
+        <Stack style={{ flex: 1 }} marginVertical={10}>
             {active && <Camera
                 ref={cameraRef}
                 style={StyleSheet.absoluteFill}
@@ -246,7 +252,6 @@ async function upsertUserVerification(data: UserVerificationType) {
     try {
 
         const myData = await DataStore.query(UserVerification);
-        console.log('mydfata', myData);
         if (myData.length > 0) {
             const original = myData[0];
             return DataStore.save(UserVerification.copyOf(original, updated => {
@@ -317,6 +322,12 @@ function UserVerificationScreen(props: PropsWithChildren & NativeStackScreenProp
 
             const uploadFile = selfie.upload;
 
+            console.log('before', uploadFile.path);
+            if (Platform.OS == 'ios') {
+                uploadFile.path = cleanIOSPath(uploadFile.path, '/private');
+            }
+            console.log('after', uploadFile.path);
+
             const s3 = await upload(uploadFile.path, 'verify');
             await upsertUserVerification({
                 selfie_key: s3.key,
@@ -328,7 +339,7 @@ function UserVerificationScreen(props: PropsWithChildren & NativeStackScreenProp
             setPhase('initial');
 
         } catch (err) {
-            console.log('err@uplaodID', err.message);
+            console.log('err@selfie', err.message);
         }
 
         setUploading(false);

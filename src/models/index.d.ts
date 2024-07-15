@@ -17,6 +17,7 @@ type EagerNotification = {
   readonly timestamp?: string | null;
   readonly metadata?: string | null;
   readonly type?: string | null;
+  readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -32,6 +33,7 @@ type LazyNotification = {
   readonly timestamp?: string | null;
   readonly metadata?: string | null;
   readonly type?: string | null;
+  readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -48,12 +50,14 @@ type EagerLocationReport = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
+  readonly report_type?: string | null;
   readonly coordinates?: string | null;
   readonly location?: string | null;
   readonly datetime?: string | null;
   readonly ratings?: (string | null)[] | null;
   readonly description?: string | null;
   readonly media?: (string | null)[] | null;
+  readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -64,12 +68,14 @@ type LazyLocationReport = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
+  readonly report_type?: string | null;
   readonly coordinates?: string | null;
   readonly location?: string | null;
   readonly datetime?: string | null;
   readonly ratings?: (string | null)[] | null;
   readonly description?: string | null;
   readonly media?: (string | null)[] | null;
+  readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -86,12 +92,14 @@ type EagerIncidentReport = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
+  readonly report_type?: string | null;
   readonly coordinates?: string | null;
   readonly location?: string | null;
   readonly datetime?: string | null;
   readonly category?: (string | null)[] | null;
   readonly description?: string | null;
   readonly media?: (string | null)[] | null;
+  readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -102,12 +110,14 @@ type LazyIncidentReport = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
+  readonly report_type?: string | null;
   readonly coordinates?: string | null;
   readonly location?: string | null;
   readonly datetime?: string | null;
   readonly category?: (string | null)[] | null;
   readonly description?: string | null;
   readonly media?: (string | null)[] | null;
+  readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -135,6 +145,7 @@ type EagerMedicalRecord = {
   readonly skin_color?: string | null;
   readonly hair_color?: string | null;
   readonly tattoo?: string | null;
+  readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -156,6 +167,7 @@ type LazyMedicalRecord = {
   readonly skin_color?: string | null;
   readonly hair_color?: string | null;
   readonly tattoo?: string | null;
+  readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -176,6 +188,7 @@ type EagerEmergencyContact = {
   readonly phone_number?: string | null;
   readonly status?: number | null;
   readonly phone_number_id?: string | null;
+  readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -190,6 +203,7 @@ type LazyEmergencyContact = {
   readonly phone_number?: string | null;
   readonly status?: number | null;
   readonly phone_number_id?: string | null;
+  readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -212,6 +226,7 @@ type EagerUserVerification = {
   readonly selfie_name?: string | null;
   readonly selfie_mime_type?: string | null;
   readonly selfie_key?: string | null;
+  readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -228,6 +243,7 @@ type LazyUserVerification = {
   readonly selfie_name?: string | null;
   readonly selfie_mime_type?: string | null;
   readonly selfie_key?: string | null;
+  readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -236,4 +252,74 @@ export declare type UserVerification = LazyLoading extends LazyLoadingDisabled ?
 
 export declare const UserVerification: (new (init: ModelInit<UserVerification>) => UserVerification) & {
   copyOf(source: UserVerification, mutator: (draft: MutableModel<UserVerification>) => MutableModel<UserVerification> | void): UserVerification;
+}
+
+type EagerSafeWords = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<SafeWords, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly safe_word?: string | null;
+  readonly enabled?: boolean | null;
+  readonly status?: number | null;
+  readonly owner?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazySafeWords = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<SafeWords, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly safe_word?: string | null;
+  readonly enabled?: boolean | null;
+  readonly status?: number | null;
+  readonly owner?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type SafeWords = LazyLoading extends LazyLoadingDisabled ? EagerSafeWords : LazySafeWords
+
+export declare const SafeWords: (new (init: ModelInit<SafeWords>) => SafeWords) & {
+  copyOf(source: SafeWords, mutator: (draft: MutableModel<SafeWords>) => MutableModel<SafeWords> | void): SafeWords;
+}
+
+type EagerAccountSettings = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<AccountSettings, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly enableBiometricLogin?: boolean | null;
+  readonly enableFaceIdLogin?: boolean | null;
+  readonly faceIDKey?: string | null;
+  readonly enableSafeWords?: boolean | null;
+  readonly owner?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyAccountSettings = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<AccountSettings, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly enableBiometricLogin?: boolean | null;
+  readonly enableFaceIdLogin?: boolean | null;
+  readonly faceIDKey?: string | null;
+  readonly enableSafeWords?: boolean | null;
+  readonly owner?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type AccountSettings = LazyLoading extends LazyLoadingDisabled ? EagerAccountSettings : LazyAccountSettings
+
+export declare const AccountSettings: (new (init: ModelInit<AccountSettings>) => AccountSettings) & {
+  copyOf(source: AccountSettings, mutator: (draft: MutableModel<AccountSettings>) => MutableModel<AccountSettings> | void): AccountSettings;
 }

@@ -1,4 +1,4 @@
-import { PermissionsAndroid } from "react-native";
+import { PermissionStatus, PermissionsAndroid } from "react-native";
 import Torch from 'react-native-torch';
 // import Contacts from "react-native-contacts";
 
@@ -24,7 +24,7 @@ export async function checkTorchPermission() {
     return granted;
 }
 
-export async function checkAudioPermission() {
+export async function checkAudioPermission(): Promise<PermissionStatus> {
     const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
         {

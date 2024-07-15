@@ -16,13 +16,13 @@ async function localPath(image: string): Promise<string> {
     RNFS.mkdir(`${path}/SafeHer/`);
     newPath = `${path}/SafeHer/${today}-report${ext}`;
 
-    console.log(image, "to", newPath);
+    // console.log(image, "to", newPath);
 
     // COPY the file
     return RNFS.copyFile(image, newPath)
         .then(() => {
-            console.log('IMG COPIED!');
-            console.log(newPath);
+            // console.log('IMG COPIED!');
+            // console.log(newPath);
             return newPath;
         })
         .catch((err: any) => {

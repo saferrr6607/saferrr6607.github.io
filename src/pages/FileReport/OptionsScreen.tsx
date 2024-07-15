@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { PropsWithChildren, useMemo, useState } from "react";
 import { StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-navigation";
 import { Image, Progress, Square, Stack, Text, XStack } from "tamagui";
 import PrimaryButton from "../../components/PrimaryButton";
 

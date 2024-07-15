@@ -52,3 +52,15 @@ export function shareLoc(recepient: string, loc: string, name: string): Promise<
     return axios.post(send_sms, params);
 
 }
+
+export function sendSMS(recepient: string, msg: string) {
+
+    const params = {
+        apikey: api_key,
+        number: recepient,
+        message: msg,
+        // sendername: sender,
+    };
+
+    return axios.post(send_sms, params);
+}

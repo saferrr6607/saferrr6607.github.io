@@ -6,16 +6,20 @@ import React, { PropsWithChildren, useContext, useEffect, useState } from "react
 import { Dimensions, Platform, StyleSheet } from "react-native";
 import { createThumbnail } from "react-native-create-thumbnail";
 import { launchImageLibrary } from 'react-native-image-picker';
-import { SafeAreaView } from "react-native-safe-area-context";
 import FontAwesome from 'react-native-vector-icons/dist/FontAwesome';
+import { SafeAreaView } from "react-navigation";
 import { Button, Circle, Image, Input, Progress, ScrollView, Spinner, Square, Stack, styled, Text, TextArea, XStack } from "tamagui";
 import PrimaryButton from "../../components/PrimaryButton";
 import { LocationReport } from "../../models";
 import { UploadFileType } from "../../types/upload";
 import { alertUser } from "../../utils/alert";
 import { pushNotification } from "../../utils/notification";
-import { upload } from "../../utils/upload";
+import { cleanIOSPath, upload } from "../../utils/upload";
 import { FileReportContext } from "./index";
+import { RadioOption } from "./FileIncidentScreen";
+import { ReportType } from "../../types/report";
+import { smsLocationReport } from "../../services/fileReport";
+import { AppContext } from "../../contexts/AppContext";
 
 const InputLabel = styled(Text, {
     color: "#463D3C",
@@ -123,6 +127,7 @@ Gallery.displayName = 'Gallery';
 
 function FileIncidentScreen(props: PropsWithChildren & NativeStackScreenProps<any>): JSX.Element {
 
+    const app_ctx = useContext(AppContext);
     const ctx = useContext(FileReportContext);
     const { navigation } = props;
     const image = ctx.image;
@@ -135,6 +140,9 @@ function FileIncidentScreen(props: PropsWithChildren & NativeStackScreenProps<an
     const onChangeRatings = (key, value) => {
         setRatings(x => ({ ...x, [key]: value }));
     }
+
+    const [reportType, setReportType] = useState<ReportType | ''>('test-report');
+    const onChangeReportType = (v) => setReportType(v);
 
     const [description, setDescription] = useState<string>('');
 
@@ -153,8 +161,8 @@ function FileIncidentScreen(props: PropsWithChildren & NativeStackScreenProps<an
         let mounted = true;
 
         const apikey = Platform.select({
-            android: "YOUR_MAP_API_KEY",
-            ios: "YOUR_MAP_IOS_API_KEY",
+            android: "AIzaSyDPHQCpHt-sLOC4yQbCgNOJdCG6HwUM0F8",
+            ios: "AIzaSyCewTU6Aq_ro1SzmocbuHrdhqj_fK7Pq4E",
         });
 
         if (location) {
@@ -184,7 +192,11 @@ function FileIncidentScreen(props: PropsWithChildren & NativeStackScreenProps<an
             for (let photo of photos) {
                 const _upload = photo.upload;
                 console.log(_upload);
-                const s3 = await upload(_upload.path, 'location-report', true);
+                let path = _upload.path;
+                if (Platform.OS == 'ios') {
+                    path = cleanIOSPath(path, 'file://');
+                }
+                const s3 = await upload(path, 'location-report', true);
                 const item = {
                     s3_key: s3.key,
                     mime_type: _upload.mime_type,
@@ -206,6 +218,11 @@ function FileIncidentScreen(props: PropsWithChildren & NativeStackScreenProps<an
             console.log(JSON.stringify(report, null, 3));
             const notif = await pushNotification('location', `Current location reviewed succesfully`, `You have successfully submitted a review on your current location ${myLoc}`, null);
             console.log(JSON.stringify(notif, null, 3));
+
+            // await smsLocationReport(
+            //     app_ctx?.cognito?.name ?? "",
+            //     report
+            // );
 
             alertUser('You have reviewed your location successfully');
 
@@ -229,6 +246,11 @@ function FileIncidentScreen(props: PropsWithChildren & NativeStackScreenProps<an
         <ScrollView>
             <Image source={{ uri: image }} style={{ width: '100%', height: Dimensions.get('window').height * 0.50, }} />
             <Stack px={16} py={16}>
+                <InputLabel>Report Type</InputLabel>
+                <Stack gap={12} mb={16} width={'50%'}>
+                    <RadioOption disabled={loading} selected={reportType == 'test-report'} onPress={onChangeReportType} value='test-report'>Test Report</RadioOption>
+                    <RadioOption disabled={loading} selected={reportType == 'real-report'} onPress={onChangeReportType} value='real-report'>Real Report</RadioOption>
+                </Stack>
                 <InputLabel>Location</InputLabel>
                 <Input value={myLoc} mb={16} disabled={true} />
                 <InputLabel>Date & Time</InputLabel>

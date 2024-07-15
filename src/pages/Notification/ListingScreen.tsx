@@ -1,12 +1,13 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { DataStore, SortDirection } from "aws-amplify";
-import React, { PropsWithChildren, useCallback, useEffect, useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
+import React, { PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { Circle, Square, Stack, Text, XStack } from "tamagui";
 import { LazyNotification, Notification } from "../../models";
 import moment from "moment";
 import { FlatList } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/dist/FontAwesome';
+import { SafeAreaView } from "react-navigation";
+import { AppContext } from "../../contexts/AppContext";
 
 function NotifIcon(props) {
 
@@ -41,20 +42,26 @@ function NotifLine(props: PropsWithChildren & { type: string, myDate: string, ti
 function ListingScreen(props: PropsWithChildren & NativeStackScreenProps<any>): JSX.Element {
 
     const [myNotifs, setMyNotifs] = useState<Array<LazyNotification>>([]);
+    const app_ctx = useContext(AppContext);
 
     useEffect(() => {
-        DataStore.observeQuery(Notification, p => p, { sort: s => s.timestamp(SortDirection.DESCENDING) })
-            .subscribe(snapshot => {
-                const { items, isSynced } = snapshot;
-                setMyNotifs(items);
-            });
-    }, []);
+        if (app_ctx?.cognito) {
+            const cognito_id = app_ctx.cognito.id;
+            DataStore.observeQuery(Notification, p => p, { sort: s => s.timestamp(SortDirection.DESCENDING) })
+                .subscribe(snapshot => {
+                    const { items, isSynced } = snapshot;
+                    const list = items.filter(item => item.owner == cognito_id);
+                    setMyNotifs(list);
+                });
+        }
+    }, [app_ctx?.cognito]);
 
     return <SafeAreaView style={{ height: '100%', backgroundColor: 'white' }}>
 
         <FlatList
             data={myNotifs}
             renderItem={({ item, index }) => <NotifLine key={`${item.id}`} type={item.type} myDate={moment(item.timestamp).format('MMM DD YYYY')} title={item.title} description={item.description} />}
+            ListFooterComponent={() => <Stack height={120} />}
         />
     </SafeAreaView>
 }

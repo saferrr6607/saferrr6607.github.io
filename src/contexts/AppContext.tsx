@@ -36,12 +36,14 @@ export default function AppProvider(props: any) {
         let subscription: any = null;
 
         if (cognito) {
+            const cognito_id = cognito.id;
             subscription = DataStore
                 .observeQuery(EmergencyContact, cond => cond.status.eq(1))
                 .subscribe(snapshot => {
                     const { items, isSynced } = snapshot;
-                    console.log(`[Snapshot] item count: ${items.length}, isSynced: ${isSynced}`);
-                    setMyContacts(items);
+                    const list = items.filter(item => item.owner == cognito_id);
+                    console.log(`[Snapshot] item count: ${items.length}, owned: ${list.length}, isSynced: ${isSynced}`);
+                    setMyContacts(list);
                 });
         }
 

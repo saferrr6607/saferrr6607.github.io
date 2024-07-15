@@ -2,7 +2,7 @@
   "version": "1",
   "cognitoConfig": {
     "identityPoolName": "safeher2fc41a60_identitypool_2fc41a60",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "safehe2fc41a60",
     "userPoolName": "safeher2fc41a60_userpool_2fc41a60",
     "autoVerifiedAttributes": [
@@ -41,9 +41,31 @@
       "email"
     ],
     "triggers": {},
-    "userPoolGroupList": [],
+    "userPoolGroupList": [
+      "USERS",
+      "ADMIN"
+    ],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
-    "useEnabledMfas": true
+    "useEnabledMfas": true,
+    "authRoleArn": {
+      "Fn::GetAtt": [
+        "AuthRole",
+        "Arn"
+      ]
+    },
+    "unauthRoleArn": {
+      "Fn::GetAtt": [
+        "UnauthRole",
+        "Arn"
+      ]
+    },
+    "breakCircularDependency": true,
+    "dependsOn": [],
+    "parentStack": {
+      "Ref": "AWS::StackId"
+    },
+    "permissions": [],
+    "adminQueryGroup": "USERS"
   }
 }
