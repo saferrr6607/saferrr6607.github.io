@@ -1,5 +1,27 @@
 {
   "api": {
+    "AdminQueries": {
+      "authorizationType": "AMAZON_COGNITO_USER_POOLS",
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "safeher2fc41a60"
+        },
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "AdminQueries195a40f7"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "safeher": {
       "dependsOn": [
         {
@@ -27,6 +49,20 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync"
+    },
+    "verifySignature": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "safehera6944f9f"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
     }
   },
   "auth": {
@@ -55,6 +91,119 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
+    },
+    "userPoolGroups": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId",
+            "AppClientIDWeb",
+            "AppClientID",
+            "IdentityPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "safeher2fc41a60"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito-UserPool-Groups"
+    }
+  },
+  "function": {
+    "AdminQueries195a40f7": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "safeher2fc41a60"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "safehera6944f9f": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "safeherb60ec900": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "safehere82cfcbd": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_AdminQueries195a40f7_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AdminQueries195a40f7"
+        }
+      ]
+    },
+    "AMPLIFY_function_AdminQueries195a40f7_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AdminQueries195a40f7"
+        }
+      ]
+    },
+    "AMPLIFY_function_safehera6944f9f_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "safehera6944f9f"
+        }
+      ]
+    },
+    "AMPLIFY_function_safehera6944f9f_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "safehera6944f9f"
+        }
+      ]
+    },
+    "AMPLIFY_function_safeherb60ec900_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "safeherb60ec900"
+        }
+      ]
+    },
+    "AMPLIFY_function_safeherb60ec900_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "safeherb60ec900"
+        }
+      ]
+    },
+    "AMPLIFY_function_safehere82cfcbd_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "safehere82cfcbd"
+        }
+      ]
+    },
+    "AMPLIFY_function_safehere82cfcbd_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "safehere82cfcbd"
+        }
+      ]
     }
   },
   "storage": {

@@ -8,7 +8,7 @@ import { TamaguiProvider } from 'tamagui';
 import App from './App';
 import { name as appName } from './app.json';
 
-import { enableLatestRenderer } from 'react-native-maps';
+// import { enableLatestRenderer } from 'react-native-maps';
 
 import { Amplify, Auth } from 'aws-amplify';
 import awsmobile from './src/aws-exports';
@@ -19,7 +19,7 @@ import config from './tamagui.config';
 Amplify.configure(awsmobile);
 Auth.configure(awsmobile);
 
-enableLatestRenderer();
+// enableLatestRenderer();
 
 function Main(props) {
     return <TamaguiProvider config={config} defaultTheme='light'>

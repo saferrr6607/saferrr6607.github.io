@@ -1,21 +1,23 @@
 import Geolocation from '@react-native-community/geolocation';
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import axios from "axios";
-import React, { PropsWithChildren, useContext, useEffect, useRef, useState } from "react";
+import React, { PropsWithChildren, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { Dimensions, Platform, Share, StyleSheet } from "react-native";
 import MapView, { Region } from "react-native-maps";
-import Feather from 'react-native-vector-icons/dist/Feather';
-import { Button, Dialog, DialogProps, Separator, Spinner, Stack, styled, Text, Unspaced, XStack, ZStack } from "tamagui";
+import Feather from 'react-native-vector-icons/Feather';
+import { Button, Dialog, DialogProps, Image, Separator, Spinner, Stack, styled, Text, Unspaced, XStack, ZStack } from "tamagui";
 import PrimaryButton from "../../components/PrimaryButton";
 import SecondaryButton from "../../components/SecondaryButton";
 import DrawerScreen from "./components/DrawerScreen";
-
 import ContactListItem from "../../components/ContactListItem";
 import { AppContext } from "../../contexts/AppContext";
 import { ContactPersonType } from "../../types/contacts";
 import { alertUser } from "../../utils/alert";
 import { createShareMsg, shareLoc } from "../../utils/sms";
 import { SafeAreaView } from 'react-navigation';
+import { useFocusEffect } from '@react-navigation/native';
+import useSafeWords from '../../hooks/useSafeWords';
+import { isInitializedSafeWords } from '../../services/safeWords';
 var RNFS = require('react-native-fs');
 
 const DefaultButton = styled(Button, {
@@ -23,6 +25,41 @@ const DefaultButton = styled(Button, {
     color: "white",
     pressStyle: { opacity: 0.75 },
 });
+
+const info = require("../../assets/img/info.png");
+
+function randomNumber(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min) + min);
+}
+
+function PeopleInYourArea() {
+
+    const [counter, setCounter] = useState<number>(0);
+
+    useFocusEffect(useCallback(() => {
+        const interval = setInterval(() => {
+            setCounter(x => {
+                const operator = Math.random() > 0.8 ? -1 : 1;
+                let c = x + (randomNumber(2, 6) * operator);
+                if (c < 0) c = x + randomNumber(2, 6);
+                return c;
+            })
+        }, 2000);
+
+        return function () {
+            clearInterval(interval);
+        }
+    }, []));
+
+    return <ZStack style={[StyleSheet.absoluteFill, { pointerEvents: 'none' }]}>
+        <XStack style={{ position: "absolute", width: '100%', top: 24 }} px={16}>
+            <Stack bg='$file' px={24} py={16} flex={1} borderRadius={50} alignItems="center" flexDirection="row">
+                <Image source={info} />
+                <Text flex={1} color='white' textAlign="center">There are {counter} women commuters within 10 meters.</Text>
+            </Stack>
+        </XStack>
+    </ZStack>;
+}
 
 function useGeoCode(shareMode: boolean) {
 
@@ -34,8 +71,8 @@ function useGeoCode(shareMode: boolean) {
         if (shareMode) {
             setSearch(true);
             const apikey = Platform.select({
-                android: "YOUR_MAP_API_KEY",
-                ios: "YOUR_MAP_IOS_API_KEY",
+                android: "AIzaSyDPHQCpHt-sLOC4yQbCgNOJdCG6HwUM0F8",
+                ios: "AIzaSyCewTU6Aq_ro1SzmocbuHrdhqj_fK7Pq4E",
             });
             Geolocation.getCurrentPosition(async info => {
                 const coor = info.coords;
@@ -137,6 +174,16 @@ function ShareDialog(props: PropsWithChildren & DialogProps & { onOpenChange: Fu
 
     }
 
+    const safeWordsEngine = useSafeWords();
+
+    useFocusEffect(useCallback(() => {
+        isInitializedSafeWords().then((resp) => {
+            if (resp.initialized && resp.enableSafeWords) {
+                safeWordsEngine.manualStart();
+            }
+        });
+    }, []));
+
     return <Dialog modal open={props.open} onOpenChange={onOpenChange}>
         <Dialog.Portal>
             <Dialog.Overlay
@@ -154,7 +201,7 @@ function ShareDialog(props: PropsWithChildren & DialogProps & { onOpenChange: Fu
                         How do you want to share your location?
                     </Dialog.Description>
                     <Stack gap={12}>
-                        <PrimaryButton onPress={handleOnShareToContacts}>Share to my emegency contact</PrimaryButton>
+                        <PrimaryButton onPress={handleOnShareToContacts}>Share to my emergency contact</PrimaryButton>
                         <SecondaryButton onPress={handleOnShareLink}>Create a shareable link</SecondaryButton>
                     </Stack>
                 </>}
@@ -297,6 +344,7 @@ function DashboardScreen(props: PropsWithChildren & NativeStackScreenProps<any>)
                     <DefaultButton flex={1} bg="$loc" onPress={onPressShare}>Share location</DefaultButton>
                 </XStack>
             </Stack>}
+            {/* {!shareMode && <PeopleInYourArea />} */}
             {shareMode && <ZStack style={StyleSheet.absoluteFill}>
                 <XStack style={{ position: "absolute", width: '100%', top: 24 }} px={16}>
                     <Stack bg='$file' px={24} py={16} flex={1} borderRadius={50} alignItems="center" flexDirection="row">

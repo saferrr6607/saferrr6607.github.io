@@ -3,6 +3,8 @@ import { PropsWithChildren } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button, ListItem, ListItemFrame, ListItemText, ScrollView, Stack, Text, XStack, styled } from "tamagui";
 import DrawerScreen from "./components/DrawerScreen";
+import React from "react";
+import { View } from "react-native";
 
 const Header = styled(Text, {
     fontWeight: "700",
@@ -33,8 +35,8 @@ const TextBlock = styled(Text, {
 });
 
 const RowItem = (props: PropsWithChildren & { alpha: string, text: string }): JSX.Element => {
-    return <XStack px={20} mb={10}>
-        <Text lineHeight={20} mr={20}>{props.alpha}</Text>
+    return <XStack paddingHorizontal={20} marginBottom={10}>
+        <Text lineHeight={20} marginRight={20}>{props.alpha}</Text>
         <Text lineHeight={20} flex={1}>{props.text}</Text>
     </XStack>
 }
@@ -78,7 +80,7 @@ function TermsAndPrivacyScreen(props: PropsWithChildren & NativeStackScreenProps
     return <DrawerScreen
         active="terms"
     >
-        <SafeAreaView style={{
+        <View style={{
             height: "100%",
             backgroundColor: "white",
         }}>
@@ -100,10 +102,10 @@ function TermsAndPrivacyScreen(props: PropsWithChildren & NativeStackScreenProps
                 </TextBlock>
 
                 <ListItem justifyContent="flex-start" icon={<Text>2.</Text>}><SectionHeader>AGREEMENT TO THESE TERMS</SectionHeader></ListItem>
-                <TextBlock mb={14}>
+                <TextBlock marginBottom={14}>
                     By signing up to use the SafeHer App’s Services, you agree to comply with and be legally bound by this Agreement, as revised from time to time. If you do not agree to any of the terms set forth in this Agreement, or any subsequent modification to the Agreement, you may not access or use any of SafeHer App’s Services.
                 </TextBlock>
-                <TextBlock mb={12}>
+                <TextBlock marginBottom={12}>
                     We may amend or modify this Agreement by posting on the SafeHer App’s website, mobile application, or emailing you the revised Agreement, and the revised Agreement shall be effective at such time. We may (a) modify or discontinue any portion of the SafeHer App Services, and (b) suspend or terminate your access to the SafeHer App Services, at any time, and from time to time, without notice to you in certain, limited circumstances described herein. You agree that we shall not be liable to you or any third party for any modification or termination of the SafeHer App Services, or suspension or termination of your access to the SafeHer App Services, except to the extent otherwise expressly set forth herein.
                 </TextBlock>
                 <TextBlock>
@@ -137,7 +139,7 @@ function TermsAndPrivacyScreen(props: PropsWithChildren & NativeStackScreenProps
                     By engaging the services of SafeHer App, you expressly consent to the use of any personal information, sensitive or otherwise, consistent with the provisions of Republic Act No. 10173 otherwise known as the “Data Privacy Act of 2012”.
                     {'\n\n'}
                 </TextBlock>
-                <Bold px={20} mb={12}>Prohibited Businesses And Prohibited Use{'\n'}</Bold>
+                <Bold paddingHorizontal={20} marginBottom={12}>Prohibited Businesses And Prohibited Use{'\n'}</Bold>
                 <TextBlock>
                     The following categories of businesses, business practices, and sale items are barred from accessing the Services (“Prohibited Businesses”). By opening a SafeHer App account, you confirm that you will not use the Services in connection with the following businesses, activities, practices, or items:
                 </TextBlock>
@@ -165,32 +167,32 @@ function TermsAndPrivacyScreen(props: PropsWithChildren & NativeStackScreenProps
                 </TextBlock>
 
                 <ListItem justifyContent="flex-start" icon={<Text>8.</Text>}><SectionHeader>A.I TRIGGERED SECURITY FEATURES</SectionHeader></ListItem>
-                <Stack pl={20}>
-                    <SectionHeader pl={20} mb={10}>SCREAM DETECTION</SectionHeader>
-                    <TextBlock mb={10}>You agree to have your device’s microphone and record audio used for the purpose of detecting a scream while the app is active. This enables the SafeHer app to detect audio recorded as a scream and will trigger emergency protocols set by You. Recorded audio is then stored externally for processing the audio to detect the scream.</TextBlock>
+                <Stack paddingLeft={20}>
+                    <SectionHeader paddingLeft={20} marginBottom={10}>SCREAM DETECTION</SectionHeader>
+                    <TextBlock marginBottom={10}>You agree to have your device’s microphone and record audio used for the purpose of detecting a scream while the app is active. This enables the SafeHer app to detect audio recorded as a scream and will trigger emergency protocols set by You. Recorded audio is then stored externally for processing the audio to detect the scream.</TextBlock>
 
-                    <SectionHeader pl={20} mb={10}>CRASH DETECTION</SectionHeader>
-                    <TextBlock mb={10}>You agree to have your device’s motion settings be used for the purpose of detecting a crash while the app is active. This enables the SafeHer App to detect your device’s motion should there be a crash and will trigger emergency protocols set by You. Recorded motion is then stored externally for processing the audio to detect the scream.</TextBlock>
+                    <SectionHeader paddingLeft={20} marginBottom={10}>CRASH DETECTION</SectionHeader>
+                    <TextBlock marginBottom={10}>You agree to have your device’s motion settings be used for the purpose of detecting a crash while the app is active. This enables the SafeHer App to detect your device’s motion should there be a crash and will trigger emergency protocols set by You. Recorded motion is then stored externally for processing the audio to detect the scream.</TextBlock>
 
-                    <SectionHeader pl={20} mb={10}>LIVE LOCATION SHARING</SectionHeader>
-                    <TextBlock mb={10}>You agree that this is an optional feature where You enable your live location settings to be connected into the app for the purpose of sharing it with your emergency contacts through the SafeHer app. </TextBlock>
+                    <SectionHeader paddingLeft={20} marginBottom={10}>LIVE LOCATION SHARING</SectionHeader>
+                    <TextBlock marginBottom={10}>You agree that this is an optional feature where You enable your live location settings to be connected into the app for the purpose of sharing it with your emergency contacts through the SafeHer app. </TextBlock>
 
-                    <SectionHeader pl={20} mb={10}>USE OF CAMERA</SectionHeader>
-                    <TextBlock mb={10}>You agree to enable the use of your device’s camera as one of the security measures triggered by the SafeHer App</TextBlock>
+                    <SectionHeader paddingLeft={20} marginBottom={10}>USE OF CAMERA</SectionHeader>
+                    <TextBlock marginBottom={10}>You agree to enable the use of your device’s camera as one of the security measures triggered by the SafeHer App</TextBlock>
 
-                    <SectionHeader pl={20} mb={10}>USE OF CONTACTS</SectionHeader>
-                    <TextBlock mb={10}>You agree to be able to choose from your device’s contacts and set chosen contacts as emergency contacts inside SafeHer App. This is one of the security features triggered by the App when in distress.</TextBlock>
+                    <SectionHeader paddingLeft={20} marginBottom={10}>USE OF CONTACTS</SectionHeader>
+                    <TextBlock marginBottom={10}>You agree to be able to choose from your device’s contacts and set chosen contacts as emergency contacts inside SafeHer App. This is one of the security features triggered by the App when in distress.</TextBlock>
 
-                    <SectionHeader pl={20} mb={10}>STORAGE OF DATA</SectionHeader>
-                    <TextBlock mb={5}>Data shared by You can include the following information and its uses inside the SafeHer App:</TextBlock>
-                    <TextBlock mb={10}>
+                    <SectionHeader paddingLeft={20} marginBottom={10}>STORAGE OF DATA</SectionHeader>
+                    <TextBlock marginBottom={5}>Data shared by You can include the following information and its uses inside the SafeHer App:</TextBlock>
+                    <TextBlock marginBottom={10}>
                         •{'    '}Medical information: SafeHer may collect medical records for the purpose of storing medical details in case it will be used by partner authorities due to accidents involving You.{'\n'}
                         •{'    '}Account Creation: SafeHer App will require personal data such as email address, contact number, First Name and Last Name,for the purpose of verifying Your authenticity.
                     </TextBlock>
 
-                    <SectionHeader pl={20} mb={10}>ARTIFICIAL INTELLIGENCE</SectionHeader>
-                    <TextBlock mb={5}>A.I. is used to trigger security protocols after detecting scream or crash. This includes the following:</TextBlock>
-                    <TextBlock mb={10}>
+                    <SectionHeader paddingLeft={20} marginBottom={10}>ARTIFICIAL INTELLIGENCE</SectionHeader>
+                    <TextBlock marginBottom={5}>A.I. is used to trigger security protocols after detecting scream or crash. This includes the following:</TextBlock>
+                    <TextBlock marginBottom={10}>
                         •{'    '}Flashing of device flashlight{'\n'}
                         •{'    '}Auto camera snaps in front and back{'\n'}
                         •{'    '}Auto sending of SMS to emergency contacts
@@ -207,29 +209,29 @@ function TermsAndPrivacyScreen(props: PropsWithChildren & NativeStackScreenProps
                 <TextBlock>“SafeHer” and all logos related to the SafeHer App Services and/or SafeHer App Services are either trademarks or registered marks of SafeHer App, their registered owners, or its licensors. The Trademarks and Material should not be copied, reproduced, modified, republished, uploaded, posted, transmitted, scraped, collected, or distributed in any form or by any means, whether manual or automated. The use of any such Materials on any other Site or networked computer environment for any other purpose is strictly prohibited; any such unauthorized use may violate copyright, trademark, and other applicable laws and could result in criminal or civil penalties.</TextBlock>
 
                 <ListItem justifyContent="flex-start" icon={<Text>12.</Text>}><SectionHeader>DISPUTES</SectionHeader></ListItem>
-                <TextBlock mb={10}><Bold>Indemnification.</Bold> You agree to indemnify and hold SafeHer App, its parent, the officers, directors, agents, joint venturers, and employees harmless from any claim or demand (including attorneys’ fees) arising out of your breach of this Agreement or your use of SafeHer App Services.</TextBlock>
-                <TextBlock mb={10}><Bold>Release of SafeHer App.</Bold> If you have a dispute with one or more users, you release SafeHer App (and our parent, officers, directors, agents, joint ventures, employees, and suppliers) from any and all claims, demands, and damages (actual and consequential) of every kind and nature arising out of or in any way connected with such disputes. In addition, this release extends to claims that the creditor does not know or suspect to exist in his favor at the time of executing the release, which if not known by him must have materially affected his settlement with the debtor.</TextBlock>
-                <TextBlock mb={10}><Bold>Disputes with SafeHer App.</Bold> If you think we have made an error, email us at contact@safeher.com. In your correspondence, you must give us information sufficient to identify you, your account, and the transaction on which you believe an error occurred. You must contact us within thirty (30) days after the transaction occurred. Within thirty (30) days of receiving your request, we must either correct the error or explain to you why we believe the transaction was correct.</TextBlock>
-                <TextBlock mb={10}><Bold>Service Level Commitment on Complaints and Disputes.</Bold> Within fifteen (15) business days of our receipt of your complaint, a Customer Assistance Officer will address all points raised in your complaint by sending you an email ("Resolution Notice") in which the Officer will: (i) offer to resolve your complaint in the way you requested; (ii) make a determination rejecting your complaint and set out the reasons for the rejection; or (iii) offer to resolve your complaint with an alternative solution. In exceptional circumstances, if the Officer is unable to respond to your complaint within 15 business days for reasons beyond SafeHer App's control, the Officer will send you a holding reply indicating the reasons for the delay in answering your complaint and specifying the deadline by which the Officer will respond to your complaint (which will be no later than 30 days from our receipt of your complaint. Any offer of resolution made to you will only become binding on us if accepted by you. An offer of resolution will not constitute any admission by us of any wrongdoing or liability regarding the subject matter of the complaint.</TextBlock>
+                <TextBlock marginBottom={10}><Bold>Indemnification.</Bold> You agree to indemnify and hold SafeHer App, its parent, the officers, directors, agents, joint venturers, and employees harmless from any claim or demand (including attorneys’ fees) arising out of your breach of this Agreement or your use of SafeHer App Services.</TextBlock>
+                <TextBlock marginBottom={10}><Bold>Release of SafeHer App.</Bold> If you have a dispute with one or more users, you release SafeHer App (and our parent, officers, directors, agents, joint ventures, employees, and suppliers) from any and all claims, demands, and damages (actual and consequential) of every kind and nature arising out of or in any way connected with such disputes. In addition, this release extends to claims that the creditor does not know or suspect to exist in his favor at the time of executing the release, which if not known by him must have materially affected his settlement with the debtor.</TextBlock>
+                <TextBlock marginBottom={10}><Bold>Disputes with SafeHer App.</Bold> If you think we have made an error, email us at contact@safeher.com. In your correspondence, you must give us information sufficient to identify you, your account, and the transaction on which you believe an error occurred. You must contact us within thirty (30) days after the transaction occurred. Within thirty (30) days of receiving your request, we must either correct the error or explain to you why we believe the transaction was correct.</TextBlock>
+                <TextBlock marginBottom={10}><Bold>Service Level Commitment on Complaints and Disputes.</Bold> Within fifteen (15) business days of our receipt of your complaint, a Customer Assistance Officer will address all points raised in your complaint by sending you an email ("Resolution Notice") in which the Officer will: (i) offer to resolve your complaint in the way you requested; (ii) make a determination rejecting your complaint and set out the reasons for the rejection; or (iii) offer to resolve your complaint with an alternative solution. In exceptional circumstances, if the Officer is unable to respond to your complaint within 15 business days for reasons beyond SafeHer App's control, the Officer will send you a holding reply indicating the reasons for the delay in answering your complaint and specifying the deadline by which the Officer will respond to your complaint (which will be no later than 30 days from our receipt of your complaint. Any offer of resolution made to you will only become binding on us if accepted by you. An offer of resolution will not constitute any admission by us of any wrongdoing or liability regarding the subject matter of the complaint.</TextBlock>
 
                 <ListItem justifyContent="flex-start" icon={<Text>13.</Text>}><SectionHeader>CONTACT DETAILS</SectionHeader></ListItem>
-                <TextBlock mb={10}>SafeHer App Customer Service Email: contact@safeher.com</TextBlock>
+                <TextBlock marginBottom={10}>SafeHer App Customer Service Email: contact@safeher.com</TextBlock>
 
                 <ListItem justifyContent="flex-start" icon={<Text>14.</Text>}><SectionHeader>GENERAL PROVISIONS</SectionHeader></ListItem>
-                <TextBlock mb={10}><Bold>Limitations of Liability.</Bold> IN NO EVENT SHALL WE, OUR TEAM, THE OFFICERS, DIRECTORS, AGENTS, JOINT VENTURERS, EMPLOYEES AND SUPPLIERS OF SafeHer App OR OUR PARENT BE LIABLE FOR ANY SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR IN CONNECTION WITH OUR WEBSITE, SafeHer App SERVICES, OR THIS AGREEMENT (HOWEVER ARISING, INCLUDING NEGLIGENCE). OUR LIABILITY, AND THE LIABILITY OF OUR PARENT COMPANY, OFFICERS, DIRECTORS, AGENTS, JOINT VENTURERS, EMPLOYEES AND SUPPLIERS, TO YOU OR ANY THIRD PARTIES IN ANY CIRCUMSTANCE IS LIMITED TO THE ACTUAL AMOUNT OF DIRECT DAMAGES.</TextBlock>
-                <TextBlock mb={10}><Bold>No Warranty.</Bold> SafeHer App SERVICES ARE PROVIDED “AS IS” AND WITHOUT ANY REPRESENTATION OF WARRANTY, WHETHER EXPRESS, IMPLIED OR STATUTORY. SafeHer App, OUR PARENT, THE OFFICERS, DIRECTORS, AGENTS, JOINT VENTURERS, EMPLOYEES AND SUPPLIERS OF SafeHer App OR OUR PARENT SPECIFICALLY DISCLAIM ANY IMPLIED WARRANTIES OF TITLE, MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. SafeHer App does not have any control over the products or services that are paid for with SafeHer App Services and SafeHer App cannot ensure that a buyer or a seller you are dealing with will actually complete the transaction or is authorized to do so. SafeHer App does not guarantee continuous, uninterrupted or secure access to any part of SafeHer App Services, and operation of our site may be interfered with by numerous factors outside of our control. SafeHer App will make reasonable efforts to ensure that requests for electronic debits and credits involving bank accounts and check issuances are processed in a timely manner but SafeHer App makes no representations or warranties regarding the amount of time needed to complete processing because SafeHer App Services are dependent upon many factors outside of our control, such as delays in the banking system. </TextBlock>
-                <TextBlock mb={10}><Bold>Force Majeure.</Bold> We shall not be liable for delays, failure in performance or interruption of Service which result directly or indirectly from any cause or condition beyond our reasonable control, including but not limited to, any delay or failure due to any act of God, act of civil or military authorities, acts of terrorists, civil disturbance, war, strike or other labor dispute, fire, interruption in telecommunications or Internet Services or network provider Services, failure of equipment and/or software, blockchain network congestion, contentious hard forks, catastrophic blockchain or smart contract code error and other catastrophes or any other occurrences which are beyond our reasonable control.</TextBlock>
-                <TextBlock mb={10}><Bold>Dispute Resolution; Arbitration.</Bold> All disputes, issues, controversies, or differences arising out of or in connection with this Agreement shall first be resolved amicably within thirty (30) calendar days after written notice thereof has been given by the complaining party to the counterparty. Disputes, controversies, or claims arising out of or in connection with this Agreement that is not resolved within 30 calendar days shall be referred to and settled by a tribunal comprised of one (1) arbitrator to be appointed by the Philippine Dispute Resolution Center, Inc. (PDRCI); The seat of arbitration will be Makati City, Philippines, the location determined by the PDRCI, the language of the arbitration will be English and the rules established by the PDRCI shall govern the process.  The arbitration tribunal will have the right to issue injunctions and its decision will be compulsory, final, and strictly mandatory to the parties who in turn waive any other jurisdiction or venue that may apply and agree to be subject to the arbitral decision waiving any appeals of any type.</TextBlock>
-                <TextBlock mb={10}><Bold>Time Limitation on Claims.</Bold> You agree that any claim you may have arising out of or related to your relationship with SafeHer App must be filed within one (1) year after the date of the relevant transaction, whichever is earlier; otherwise, your claim is permanently barred.</TextBlock>
-                <TextBlock mb={10}><Bold>Export Controls & Sanctions.</Bold> SafeHer App Services are subject to the Philippines and international export controls and economic sanctions requirements. By availing of SafeHer App’s Services, you represent and warrant that you are not a resident of any of the restricted jurisdictions below. Without limiting the foregoing, you may not avail of any of the SafeHer App Services if: (1) you are in, under the control of, or a national or resident of Cuba, Iran, North Korea, Sudan or Syria or any other country subject to United States embargo, UN sanctions, HM Treasury’s financial sanctions regime, or if you, or your cryptocurrency wallet address, or the cryptocurrency wallet address of your intended recipient or the source of your cryptocurrency, are on the U.S. Treasury Department’s Specially Designated Nationals List or the U.S. Commerce Department’s Denied Persons List, Unverified List, Entity List HM Treasury’s financial sanctions regime; or (2) you intend to supply the acquired digital currency or SafeHer App Services to Cuba, Iran, North Korea, Sudan or Syria or any other country subject to United States embargo or UN sanctions (or a national or resident of one of these countries), or to a person on the Specially Designated Nationals List, Denied Persons List, Unverified List, Entity List, or HM Treasury’s financial sanctions regime.</TextBlock>
-                <TextBlock mb={10}><Bold>Choice of Law.</Bold> This Agreement, and its application and interpretation, shall be governed exclusively by the laws of the Philippines, without regard to its conflict of law rules.</TextBlock>
+                <TextBlock marginBottom={10}><Bold>Limitations of Liability.</Bold> IN NO EVENT SHALL WE, OUR TEAM, THE OFFICERS, DIRECTORS, AGENTS, JOINT VENTURERS, EMPLOYEES AND SUPPLIERS OF SafeHer App OR OUR PARENT BE LIABLE FOR ANY SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR IN CONNECTION WITH OUR WEBSITE, SafeHer App SERVICES, OR THIS AGREEMENT (HOWEVER ARISING, INCLUDING NEGLIGENCE). OUR LIABILITY, AND THE LIABILITY OF OUR PARENT COMPANY, OFFICERS, DIRECTORS, AGENTS, JOINT VENTURERS, EMPLOYEES AND SUPPLIERS, TO YOU OR ANY THIRD PARTIES IN ANY CIRCUMSTANCE IS LIMITED TO THE ACTUAL AMOUNT OF DIRECT DAMAGES.</TextBlock>
+                <TextBlock marginBottom={10}><Bold>No Warranty.</Bold> SafeHer App SERVICES ARE PROVIDED “AS IS” AND WITHOUT ANY REPRESENTATION OF WARRANTY, WHETHER EXPRESS, IMPLIED OR STATUTORY. SafeHer App, OUR PARENT, THE OFFICERS, DIRECTORS, AGENTS, JOINT VENTURERS, EMPLOYEES AND SUPPLIERS OF SafeHer App OR OUR PARENT SPECIFICALLY DISCLAIM ANY IMPLIED WARRANTIES OF TITLE, MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. SafeHer App does not have any control over the products or services that are paid for with SafeHer App Services and SafeHer App cannot ensure that a buyer or a seller you are dealing with will actually complete the transaction or is authorized to do so. SafeHer App does not guarantee continuous, uninterrupted or secure access to any part of SafeHer App Services, and operation of our site may be interfered with by numerous factors outside of our control. SafeHer App will make reasonable efforts to ensure that requests for electronic debits and credits involving bank accounts and check issuances are processed in a timely manner but SafeHer App makes no representations or warranties regarding the amount of time needed to complete processing because SafeHer App Services are dependent upon many factors outside of our control, such as delays in the banking system. </TextBlock>
+                <TextBlock marginBottom={10}><Bold>Force Majeure.</Bold> We shall not be liable for delays, failure in performance or interruption of Service which result directly or indirectly from any cause or condition beyond our reasonable control, including but not limited to, any delay or failure due to any act of God, act of civil or military authorities, acts of terrorists, civil disturbance, war, strike or other labor dispute, fire, interruption in telecommunications or Internet Services or network provider Services, failure of equipment and/or software, blockchain network congestion, contentious hard forks, catastrophic blockchain or smart contract code error and other catastrophes or any other occurrences which are beyond our reasonable control.</TextBlock>
+                <TextBlock marginBottom={10}><Bold>Dispute Resolution; Arbitration.</Bold> All disputes, issues, controversies, or differences arising out of or in connection with this Agreement shall first be resolved amicably within thirty (30) calendar days after written notice thereof has been given by the complaining party to the counterparty. Disputes, controversies, or claims arising out of or in connection with this Agreement that is not resolved within 30 calendar days shall be referred to and settled by a tribunal comprised of one (1) arbitrator to be appointed by the Philippine Dispute Resolution Center, Inc. (PDRCI); The seat of arbitration will be Makati City, Philippines, the location determined by the PDRCI, the language of the arbitration will be English and the rules established by the PDRCI shall govern the process.  The arbitration tribunal will have the right to issue injunctions and its decision will be compulsory, final, and strictly mandatory to the parties who in turn waive any other jurisdiction or venue that may apply and agree to be subject to the arbitral decision waiving any appeals of any type.</TextBlock>
+                <TextBlock marginBottom={10}><Bold>Time Limitation on Claims.</Bold> You agree that any claim you may have arising out of or related to your relationship with SafeHer App must be filed within one (1) year after the date of the relevant transaction, whichever is earlier; otherwise, your claim is permanently barred.</TextBlock>
+                <TextBlock marginBottom={10}><Bold>Export Controls & Sanctions.</Bold> SafeHer App Services are subject to the Philippines and international export controls and economic sanctions requirements. By availing of SafeHer App’s Services, you represent and warrant that you are not a resident of any of the restricted jurisdictions below. Without limiting the foregoing, you may not avail of any of the SafeHer App Services if: (1) you are in, under the control of, or a national or resident of Cuba, Iran, North Korea, Sudan or Syria or any other country subject to United States embargo, UN sanctions, HM Treasury’s financial sanctions regime, or if you, or your cryptocurrency wallet address, or the cryptocurrency wallet address of your intended recipient or the source of your cryptocurrency, are on the U.S. Treasury Department’s Specially Designated Nationals List or the U.S. Commerce Department’s Denied Persons List, Unverified List, Entity List HM Treasury’s financial sanctions regime; or (2) you intend to supply the acquired digital currency or SafeHer App Services to Cuba, Iran, North Korea, Sudan or Syria or any other country subject to United States embargo or UN sanctions (or a national or resident of one of these countries), or to a person on the Specially Designated Nationals List, Denied Persons List, Unverified List, Entity List, or HM Treasury’s financial sanctions regime.</TextBlock>
+                <TextBlock marginBottom={10}><Bold>Choice of Law.</Bold> This Agreement, and its application and interpretation, shall be governed exclusively by the laws of the Philippines, without regard to its conflict of law rules.</TextBlock>
 
-                <Bold px={20} mt={20} mb={10}>Effective:</Bold>
-                <Text px={20}>10 August 2023</Text>
+                <Bold paddingHorizontal={20} marginTop={20} marginBottom={10}>Effective:</Bold>
+                <Text paddingHorizontal={20}>10 August 2023</Text>
 
                 <Stack height={60} />
             </ScrollView>
-        </SafeAreaView>
+        </View>
     </DrawerScreen>
 
 }

@@ -3,7 +3,7 @@ import React, { createContext, PropsWithChildren } from "react";
 import { Button, Text } from "tamagui";
 import OptionsScreen from "./OptionsScreen";
 import { Region } from "react-native-maps";
-import Feather from 'react-native-vector-icons/dist/Feather';
+import Feather from 'react-native-vector-icons/Feather';
 import FileIncidentScreen from "./FileIncidentScreen";
 import FileLocatonScreen from "./FileLocationScreen";
 

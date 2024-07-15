@@ -1,22 +1,104 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getNotification = /* GraphQL */ `
+  query GetNotification($id: ID!) {
+    getNotification(id: $id) {
+      id
+      title
+      description
+      timestamp
+      metadata
+      type
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const listNotifications = /* GraphQL */ `
+  query ListNotifications(
+    $filter: ModelNotificationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listNotifications(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        title
+        description
+        timestamp
+        metadata
+        type
+        owner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
+export const syncNotifications = /* GraphQL */ `
+  query SyncNotifications(
+    $filter: ModelNotificationFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncNotifications(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        title
+        description
+        timestamp
+        metadata
+        type
+        owner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
 export const getLocationReport = /* GraphQL */ `
   query GetLocationReport($id: ID!) {
     getLocationReport(id: $id) {
       id
+      report_type
       coordinates
       location
       datetime
       ratings
       description
       media
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
       __typename
     }
   }
@@ -30,18 +112,19 @@ export const listLocationReports = /* GraphQL */ `
     listLocationReports(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        report_type
         coordinates
         location
         datetime
         ratings
         description
         media
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        owner
         __typename
       }
       nextToken
@@ -65,18 +148,19 @@ export const syncLocationReports = /* GraphQL */ `
     ) {
       items {
         id
+        report_type
         coordinates
         location
         datetime
         ratings
         description
         media
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        owner
         __typename
       }
       nextToken
@@ -89,18 +173,19 @@ export const getIncidentReport = /* GraphQL */ `
   query GetIncidentReport($id: ID!) {
     getIncidentReport(id: $id) {
       id
+      report_type
       coordinates
       location
       datetime
       category
       description
       media
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
       __typename
     }
   }
@@ -114,18 +199,19 @@ export const listIncidentReports = /* GraphQL */ `
     listIncidentReports(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        report_type
         coordinates
         location
         datetime
         category
         description
         media
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        owner
         __typename
       }
       nextToken
@@ -149,18 +235,19 @@ export const syncIncidentReports = /* GraphQL */ `
     ) {
       items {
         id
+        report_type
         coordinates
         location
         datetime
         category
         description
         media
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        owner
         __typename
       }
       nextToken
@@ -184,12 +271,12 @@ export const getMedicalRecord = /* GraphQL */ `
       skin_color
       hair_color
       tattoo
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
       __typename
     }
   }
@@ -214,12 +301,12 @@ export const listMedicalRecords = /* GraphQL */ `
         skin_color
         hair_color
         tattoo
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        owner
         __typename
       }
       nextToken
@@ -254,12 +341,12 @@ export const syncMedicalRecords = /* GraphQL */ `
         skin_color
         hair_color
         tattoo
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        owner
         __typename
       }
       nextToken
@@ -276,12 +363,12 @@ export const getEmergencyContact = /* GraphQL */ `
       phone_number
       status
       phone_number_id
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
       __typename
     }
   }
@@ -303,12 +390,12 @@ export const listEmergencyContacts = /* GraphQL */ `
         phone_number
         status
         phone_number_id
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        owner
         __typename
       }
       nextToken
@@ -336,12 +423,12 @@ export const syncEmergencyContacts = /* GraphQL */ `
         phone_number
         status
         phone_number_id
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        owner
         __typename
       }
       nextToken
@@ -360,12 +447,12 @@ export const getUserVerification = /* GraphQL */ `
       selfie_name
       selfie_mime_type
       selfie_key
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
       __typename
     }
   }
@@ -389,12 +476,12 @@ export const listUserVerifications = /* GraphQL */ `
         selfie_name
         selfie_mime_type
         selfie_key
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        owner
         __typename
       }
       nextToken
@@ -424,12 +511,165 @@ export const syncUserVerifications = /* GraphQL */ `
         selfie_name
         selfie_mime_type
         selfie_key
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
+export const getSafeWords = /* GraphQL */ `
+  query GetSafeWords($id: ID!) {
+    getSafeWords(id: $id) {
+      id
+      safe_word
+      enabled
+      status
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const listSafeWords = /* GraphQL */ `
+  query ListSafeWords(
+    $filter: ModelSafeWordsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listSafeWords(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        safe_word
+        enabled
+        status
         owner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
+export const syncSafeWords = /* GraphQL */ `
+  query SyncSafeWords(
+    $filter: ModelSafeWordsFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncSafeWords(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        safe_word
+        enabled
+        status
+        owner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
+export const getAccountSettings = /* GraphQL */ `
+  query GetAccountSettings($id: ID!) {
+    getAccountSettings(id: $id) {
+      id
+      enableBiometricLogin
+      enableFaceIdLogin
+      faceIDKey
+      enableSafeWords
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const listAccountSettings = /* GraphQL */ `
+  query ListAccountSettings(
+    $filter: ModelAccountSettingsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listAccountSettings(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        enableBiometricLogin
+        enableFaceIdLogin
+        faceIDKey
+        enableSafeWords
+        owner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
+export const syncAccountSettings = /* GraphQL */ `
+  query SyncAccountSettings(
+    $filter: ModelAccountSettingsFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncAccountSettings(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        enableBiometricLogin
+        enableFaceIdLogin
+        faceIDKey
+        enableSafeWords
+        owner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         __typename
       }
       nextToken

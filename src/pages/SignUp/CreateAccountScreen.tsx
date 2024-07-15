@@ -1,15 +1,16 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Auth } from "aws-amplify";
-import React, { PropsWithChildren, useCallback, useContext, useReducer } from "react";
+import React, { PropsWithChildren, useCallback, useContext, useReducer, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ScrollView, Stack, Text } from "tamagui";
+import { Button, ScrollView, Stack, Text, XStack } from "tamagui";
 import { FormContext } from ".";
 import PrimaryButton from "../../components/PrimaryButton";
 import { AppContext } from "../../contexts/AppContext";
 import { alertUser } from "../../utils/alert";
 import { HeaderText, InputWithError, SubHeader } from "./recipe";
 import { AccountErrorType } from "./types";
+import Ionicons from 'react-native-vector-icons/dist/Ionicons';
 
 type reducerActionType = {
     type: string,
@@ -137,6 +138,9 @@ function CreateAccountScreen(props: PropsWithChildren & NativeStackScreenProps<a
 
     }, [app_ctx]));
 
+    const [showPwd, setShowPwd] = useState<boolean>(false);
+    const showIcon = showPwd ? 'eye-off' : 'eye';
+
     return <SafeAreaView style={{
         height: "100%",
         backgroundColor: "white"
@@ -178,17 +182,21 @@ function CreateAccountScreen(props: PropsWithChildren & NativeStackScreenProps<a
                 }}
                 mb={12}
             />
-            <InputWithError
-                value={ctx.password}
-                onChangeText={(v: string) => ctx.onUpdateAccount("PASSWORD", v)}
-                error={error.password}
-                InputProps={{
-                    fontSize: 12,
-                    placeholder: "Password (8+ characters)",
-                    secureTextEntry: true,
-                }}
-                mb={12}
-            />
+            <XStack gap={5}>
+                <InputWithError
+                    value={ctx.password}
+                    onChangeText={(v: string) => ctx.onUpdateAccount("PASSWORD", v)}
+                    error={error.password}
+                    InputProps={{
+                        fontSize: 12,
+                        placeholder: "Password (8+ characters)",
+                        secureTextEntry: !showPwd,
+                    }}
+                    mb={12}
+                    flex={1}
+                />
+                <Button icon={<Ionicons name={showIcon} size={24} />} onPress={() => setShowPwd(v => !v)} />
+            </XStack>
             <Text>By continuing, you agree to SafeHer's Terms & Conditions and Privacy Policy.</Text>
         </ScrollView>
         <Stack mb={24} px={16}>

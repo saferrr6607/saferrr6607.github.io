@@ -9,7 +9,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  [GMSServices provideAPIKey:@"YOUR_MAP_IOS_API_KEY"]; // add this line using the api key obtained from Google Console
+  [GMSServices provideAPIKey:@"AIzaSyCewTU6Aq_ro1SzmocbuHrdhqj_fK7Pq4E"]; // add this line using the api key obtained from Google Console
   self.moduleName = @"SafeHer";
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.

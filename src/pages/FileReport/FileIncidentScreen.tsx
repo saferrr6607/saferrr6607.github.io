@@ -7,7 +7,7 @@ import { Dimensions, Platform, StyleSheet } from "react-native";
 import { createThumbnail } from "react-native-create-thumbnail";
 import { launchImageLibrary } from 'react-native-image-picker';
 
-import FontAwesome from 'react-native-vector-icons/dist/FontAwesome';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { SafeAreaView } from "react-navigation";
 import { Circle, Image, Input, Progress, ScrollView, Spinner, Square, Stack, styled, Text, TextArea, XStack } from "tamagui";
 import PrimaryButton from "../../components/PrimaryButton";
@@ -15,8 +15,12 @@ import { IncidentReport } from "../../models";
 import { UploadFileType } from "../../types/upload";
 import { alertUser } from "../../utils/alert";
 import { pushNotification } from "../../utils/notification";
-import { cleanIOSPath, upload } from "../../utils/upload";
+import { cleanIOSPath, upload, uriToBlob } from "../../utils/upload";
 import { FileReportContext } from "./index";
+import { AppContext } from "../../contexts/AppContext";
+import { smsIncidentReport } from "../../services/fileReport";
+import { ReportType } from "../../types/report";
+// import { emailReport } from "../../services/fileReport";
 
 const InputLabel = styled(Text, {
     color: "#463D3C",
@@ -29,14 +33,14 @@ const categories = ['touching', 'ogling', 'facial-expressions', 'sexual-assault'
 const categoryDescMap = {
     touching: "Touching",
     ogling: "Ogling",
-    "facial-expessions": "Facial expressions",
+    "facial-expressions": "Facial expressions",
     "sexual-assault": "Sexual assault",
     "cat-call": "Cat call",
     "indecent-exposure": "Indecent exposure",
 };
 type CategoryType = typeof categories[number];
 
-function RadioOption(props: PropsWithChildren & { value: CategoryType, selected: boolean, onPress: (str) => void, disabled: boolean }) {
+export function RadioOption<TOptions>(props: PropsWithChildren & { value: TOptions, selected: boolean, onPress: (str: TOptions) => void, disabled: boolean }) {
 
     const { value, selected, onPress } = props;
 
@@ -132,6 +136,7 @@ Gallery.displayName = 'Gallery';
 
 function FileIncidentScreen(props: PropsWithChildren & NativeStackScreenProps<any>): JSX.Element {
 
+    const app_ctx = useContext(AppContext);
     const ctx = useContext(FileReportContext);
     const { navigation } = props;
     const image = ctx.image;
@@ -142,6 +147,9 @@ function FileIncidentScreen(props: PropsWithChildren & NativeStackScreenProps<an
 
     const [category, setCategory] = useState<CategoryType | ''>('');
     const onChangeCategory = (v) => setCategory(v);
+
+    const [reportType, setReportType] = useState<ReportType | ''>('test-report');
+    const onChangeReportType = (v) => setReportType(v);
 
     const [description, setDescription] = useState<string>('');
 
@@ -160,8 +168,8 @@ function FileIncidentScreen(props: PropsWithChildren & NativeStackScreenProps<an
         let mounted = true;
 
         const apikey = Platform.select({
-            android: "YOUR_MAP_API_KEY",
-            ios: "YOUR_MAP_IOS_API_KEY",
+            android: "AIzaSyDPHQCpHt-sLOC4yQbCgNOJdCG6HwUM0F8",
+            ios: "AIzaSyCewTU6Aq_ro1SzmocbuHrdhqj_fK7Pq4E",
         });
 
         if (location) {
@@ -188,6 +196,8 @@ function FileIncidentScreen(props: PropsWithChildren & NativeStackScreenProps<an
 
             const media = [];
 
+            const mailerAttachments = [];
+
             for (let photo of photos) {
                 const _upload = photo.upload;
                 let path = _upload.path;
@@ -201,6 +211,12 @@ function FileIncidentScreen(props: PropsWithChildren & NativeStackScreenProps<an
                     name: _upload.name,
                 };
                 media.push(JSON.stringify(item));
+
+                const blobby = await uriToBlob(path);
+                mailerAttachments.push({
+                    content: blobby,
+                    filename: item.name
+                });
             }
 
             const formData = new IncidentReport({
@@ -214,9 +230,23 @@ function FileIncidentScreen(props: PropsWithChildren & NativeStackScreenProps<an
 
             const report = await DataStore.save(formData);
             console.log(JSON.stringify(report, null, 3));
-            const desc = categoryDescMap[category];
+            console.log(category, categoryDescMap[category]);
+            const desc = category != '' ? categoryDescMap[category] : '';
             const notif = await pushNotification('incident', `${desc} incident reported`, `An incident (${desc}) has been reported in ${myLoc}`, null);
-            console.log(JSON.stringify(notif, null, 3));
+
+            // emailReport(mailerAttachments)
+            //     .then(resp => {
+            //         console.log('email sent', resp)
+            //     })
+            //     .catch(err => {
+            //         console.log('email report.error', err);
+            //     });
+
+            // await smsIncidentReport(
+            //     app_ctx?.cognito?.name ?? "",
+            //     report,
+            //     desc
+            // );
 
             alertUser('Incident report filed successfully');
 
@@ -240,6 +270,11 @@ function FileIncidentScreen(props: PropsWithChildren & NativeStackScreenProps<an
         <ScrollView>
             <Image source={{ uri: image }} style={{ width: '100%', height: Dimensions.get('window').height * 0.50, }} />
             <Stack px={16} py={16}>
+                <InputLabel>Report Type</InputLabel>
+                <Stack gap={12} mb={16} width={'50%'}>
+                    <RadioOption disabled={loading} selected={reportType == 'test-report'} onPress={onChangeReportType} value='test-report'>Test Report</RadioOption>
+                    <RadioOption disabled={loading} selected={reportType == 'real-report'} onPress={onChangeReportType} value='real-report'>Real Report</RadioOption>
+                </Stack>
                 <InputLabel>Location</InputLabel>
                 <Input value={myLoc} mb={16} disabled={true} />
                 <InputLabel>Date & Time</InputLabel>

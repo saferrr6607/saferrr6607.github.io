@@ -1,6 +1,7 @@
 import { shorthands } from '@tamagui/shorthands'
 import { themes, tokens } from '@tamagui/themes'
 import { createFont, createTamagui, createTheme, createTokens } from 'tamagui'
+import { config } from '@tamagui/config/v3'
 
 // if using only @tamagui/core with `react-native` components
 // if using `tamagui` this isn't necessary as it does this setup for you (for most components)
@@ -39,8 +40,8 @@ const myShorthands = {
 
 const fonts = {
     body: createFont({
-        // family: 'Roboto,Inter, Helvetica, Arial, sans-serif',
-        family: 'Roboto',
+        // family: 'Inter, Helvetica, Arial, sans-serif',
+        family: config.defaultFont,
         size: {
             // You'll want to fill these values in so you can use them
             // for now, fontSize="$4" will be 14px.
@@ -51,7 +52,6 @@ const fonts = {
         lineHeight: {
             4: 16,
         },
-
     }),
 };
 
@@ -59,7 +59,7 @@ export default createTamagui({
     themes,
     tokens: myTokens,
     shorthands: myShorthands,
-    fonts,
+    fonts: config.fonts,
     defaultProps: {
         Text: {
             color: "$text",

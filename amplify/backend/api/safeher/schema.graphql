@@ -1,33 +1,38 @@
-type Notification @model @auth(rules: [{allow: private}, {allow: owner}]) {
+type Notification @model @auth(rules: [{allow: owner}]) {
   id: ID!
   title: String
   description: String
   timestamp: AWSDateTime
   metadata: AWSJSON
   type: String
+  owner: String @auth(rules: [{ allow: owner, operations: [read, create, update, delete] }])
 }
 
-type LocationReport @model @auth(rules: [{allow: private}, {allow: owner}]) {
+type LocationReport @model @auth(rules: [{allow: owner}]) {
   id: ID!
+  report_type: String
   coordinates: AWSJSON
   location: String
   datetime: String
   ratings: [AWSJSON]
   description: String
   media: [AWSJSON]
+  owner: String @auth(rules: [{ allow: owner, operations: [read, create, update, delete] }])
 }
 
-type IncidentReport @model @auth(rules: [{allow: private}, {allow: owner}]) {
+type IncidentReport @model @auth(rules: [{allow: owner}]) {
   id: ID!
+  report_type: String
   coordinates: AWSJSON
   location: String
   datetime: String
   category: [String]
   description: String
   media: [AWSJSON]
+  owner: String @auth(rules: [{ allow: owner, operations: [read, create, update, delete] }])
 }
 
-type MedicalRecord @model @auth(rules: [{allow: private}, {allow: owner}]) {
+type MedicalRecord @model @auth(rules: [{allow: owner}]) {
   id: ID!
   date_of_birth: String
   medical_condition: String
@@ -40,17 +45,19 @@ type MedicalRecord @model @auth(rules: [{allow: private}, {allow: owner}]) {
   skin_color: String
   hair_color: String
   tattoo: String
+  owner: String @auth(rules: [{ allow: owner, operations: [read, create, update, delete] }])
 }
 
-type EmergencyContact @model @auth(rules: [{allow: private}, {allow: owner}]) {
+type EmergencyContact @model @auth(rules: [{allow: owner}]) {
   id: ID!
   name: String
   phone_number: String
   status: Int
   phone_number_id: String
+  owner: String @auth(rules: [{ allow: owner, operations: [read, create, update, delete] }])
 }
 
-type UserVerification @model @auth(rules: [{allow: private}, {allow: owner}]) {
+type UserVerification @model @auth(rules: [{allow: owner}]) {
   id: ID!
   id_name: String
   id_mime_type: String
@@ -58,5 +65,22 @@ type UserVerification @model @auth(rules: [{allow: private}, {allow: owner}]) {
   selfie_name: String
   selfie_mime_type: String
   selfie_key: String
+  owner: String @auth(rules: [{ allow: owner, operations: [read, create, update, delete] }])
 }
- 
+
+type SafeWords @model @auth(rules: [{allow: owner}]){
+  id: ID!
+  safe_word: String
+  enabled: Boolean
+  status: Int
+  owner: String @auth(rules: [{ allow: owner, operations: [read, create, update, delete] }])
+}
+
+type AccountSettings @model @auth(rules: [{allow: owner}]){
+  id: ID!
+  enableBiometricLogin: Boolean
+  enableFaceIdLogin: Boolean
+  faceIDKey: String
+  enableSafeWords: Boolean
+  owner: String @auth(rules: [{ allow: owner, operations: [read, create, update, delete] }])
+}

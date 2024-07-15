@@ -9,17 +9,39 @@
       "UnauthRoleName": "amplify-safeher-dev-235630-unauthRole",
       "StackName": "amplify-safeher-dev-235630",
       "StackId": "arn:aws:cloudformation:ap-southeast-1:404885533412:stack/amplify-safeher-dev-235630/d1c7d160-2fba-11ee-83ae-02eef778e902",
-      "AmplifyAppId": "d383m5t2ak2034"
+      "AmplifyAppId": "d383m5t2ak2034",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-safeher-dev-235630-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
     },
     "categories": {
       "auth": {
-        "safeher2fc41a60": {}
+        "safeher2fc41a60": {},
+        "userPoolGroups": {}
       },
-      "api": {
-        "safeher": {}
+      "function": {
+        "AdminQueries195a40f7": {
+          "deploymentBucketName": "amplify-safeher-dev-235630-deployment",
+          "s3Key": "amplify-builds/AdminQueries195a40f7-39446430586a61457741-build.zip"
+        },
+        "safeherb60ec900": {
+          "deploymentBucketName": "amplify-safeher-dev-235630-deployment",
+          "s3Key": "amplify-builds/safeherb60ec900-38763352335a6e673654-build.zip"
+        },
+        "safehere82cfcbd": {
+          "deploymentBucketName": "amplify-safeher-dev-235630-deployment",
+          "s3Key": "amplify-builds/safehere82cfcbd-532b3476656d714c4762-build.zip"
+        },
+        "safehera6944f9f": {
+          "deploymentBucketName": "amplify-safeher-dev-235630-deployment",
+          "s3Key": "amplify-builds/safehera6944f9f-4e4f4d63514a38454a73-build.zip"
+        }
       },
       "storage": {
         "s308ddd210": {}
+      },
+      "api": {
+        "AdminQueries": {},
+        "safeher": {},
+        "verifySignature": {}
       }
     }
   }

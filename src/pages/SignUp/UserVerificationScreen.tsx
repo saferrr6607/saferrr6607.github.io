@@ -205,7 +205,7 @@ function FaceScreen(props: PropsWithChildren & DefaultPhaseScreenProps & { selfi
         <Text lineHeight={12 * 1.25} fontSize={12} fontWeight="500" color="$textSecondary">
             To validate your identity, we require you to take a selfie.
         </Text>
-        <Stack style={{ flex: 1 }} my={10}>
+        <Stack style={{ flex: 1 }} marginVertical={10}>
             {active && <Camera
                 ref={cameraRef}
                 style={StyleSheet.absoluteFill}

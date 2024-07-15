@@ -4,7 +4,7 @@ import { schema } from './schema';
 
 
 
-const { Notification, LocationReport, IncidentReport, MedicalRecord, EmergencyContact, UserVerification } = initSchema(schema);
+const { Notification, LocationReport, IncidentReport, MedicalRecord, EmergencyContact, UserVerification, SafeWords, AccountSettings } = initSchema(schema);
 
 export {
   Notification,
@@ -12,5 +12,7 @@ export {
   IncidentReport,
   MedicalRecord,
   EmergencyContact,
-  UserVerification
+  UserVerification,
+  SafeWords,
+  AccountSettings
 };

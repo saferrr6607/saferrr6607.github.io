@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Auth } from "aws-amplify";
 import React, { PropsWithChildren, useContext, useState } from "react";
-import { Pressable, useWindowDimensions } from "react-native";
+import { Alert, Pressable, useWindowDimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from 'react-native-vector-icons/dist/Ionicons';
 import { Button, getTokens, Image, Stack, Text, XStack } from "tamagui";
@@ -54,7 +54,7 @@ function LoginScreen(props: PropsWithChildren & NativeStackScreenProps<any>): JS
         height: "100%",
         backgroundColor: secondary,
     }}>
-        <Stack flex={1} px={40} pt={60}>
+        <Stack px={40} pt={60} marginBottom={30}>
             <XStack style={{ width: "100%" }}>
                 <Image source={logo} width={150} height={75} mb={25} resizeMode="contain" />
             </XStack>

@@ -91,3 +91,10 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
+
+.env
+.env*.local
+
+.yarn/*
+!.yarn/releases
+!.yarn/plugins

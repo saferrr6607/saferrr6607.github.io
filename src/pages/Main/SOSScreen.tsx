@@ -7,7 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import SoundPlayer from "react-native-sound-player";
 import Torch from 'react-native-torch';
 import Tts from "react-native-tts";
-import FIcon from 'react-native-vector-icons/dist/FontAwesome5';
+import FIcon from 'react-native-vector-icons/dist/FontAwesome';
 import { Camera, useCameraDevices } from "react-native-vision-camera";
 import { Circle, CircleProps, ListItem as TamagListItem, Square, Stack, styled, Text as TamagText, ZStack } from "tamagui";
 import AlertButton from "../../components/AlertButton";
@@ -15,7 +15,7 @@ import { AppContext } from "../../contexts/AppContext";
 import { EmergencyContact } from "../../models";
 import { localPath } from "../../utils/files";
 import { sendSOS } from "../../utils/sms";
-import { upload } from "../../utils/upload";
+import { cleanIOSPath, upload } from "../../utils/upload";
 
 const Text = styled(TamagText, {
     color: 'white'
@@ -102,7 +102,7 @@ function useFlashingLight() {
             timeout = setTimeout(() => {
                 Torch.switchState(light);
                 setLight(l => !l);
-            }, light ? 500 : 1000);
+            }, light ? 2000 : 2000);
         }
         return () => {
             clearTimeout(timeout);
@@ -170,10 +170,17 @@ function useTTS() {
         let mounted = true;
 
         if (mounted) {
-            speak(speakCount);
+            Tts.getInitStatus()
+                .then(() => {
+                    speak(speakCount);
+                })
+                .catch(err => {
+                    console.log("err", err);
+                })
         }
 
         return function () {
+            mounted = false;
             Tts.stop();
         }
     }, [speakCount]);
@@ -182,17 +189,11 @@ function useTTS() {
 
         let mounted = true;
 
-        Tts.getInitStatus()
-            .then(() => speak(0))
-            .catch(err => {
-                console.log("err", err);
-            })
-
         Tts.addEventListener('tts-finish', () => {
-            Tts.stop();
+            // Tts.stop();
             setTimeout(() => {
                 increment();
-            }, 1500);
+            }, 3000);
         });
 
         return () => {
@@ -200,7 +201,7 @@ function useTTS() {
             Tts.stop();
             setSpeakCount(0);
         }
-    }, [setSpeakCount]);
+    }, []);
 
 }
 
@@ -221,7 +222,7 @@ function useSMS() {
                 const url = `https://www.google.com/maps/search/?api=1&query=${coor.latitude},${coor.longitude}`;
                 for (let item of my_contacts) {
                     if (item.phone_number) {
-                        const response = await sendSOS(item.phone_number, url, name);
+                        await sendSOS(item.phone_number, url, name);
                     }
                 }
             } catch (err) {
@@ -314,8 +315,13 @@ function CameraModule(props: PropsWithChildren & { mount: boolean, requestUnmoun
                 flash: devices[orientation]?.hasFlash ? "on" : "off",
             })
                 .then(photo => {
-                    console.log(photo);
-                    upload(photo.path.substring(1))
+                    let path = photo.path;
+                    if (Platform.OS == 'ios') {
+                        path = cleanIOSPath(path, '/private');
+                    } else if (Platform.OS == 'android') {
+                        path = photo.path.substring(1);
+                    }
+                    upload(path)
                         .catch(() => {
                             return localPath(photo.path);
                         });
@@ -335,7 +341,7 @@ function CameraModule(props: PropsWithChildren & { mount: boolean, requestUnmoun
             clearTimeout(timeout);
         }
     }, [orientation, devices]);
-    console.log(mount, activeCam, capturing, orientation);
+    // console.log(mount, activeCam, capturing, orientation);
 
     const noCam = !Boolean(devices?.back) && !Boolean(devices?.front);
     if (noCam) return <></>;
