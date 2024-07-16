@@ -19,6 +19,7 @@ import BiometricsSetupScreen from "./BiometricsSetupScreen";
 import SafeWordsSetupScreen from "./SafeWordsSetupScreen";
 import useSafeWords from "../../hooks/useSafeWords";
 import { isInitializedSafeWords } from "../../services/safeWords";
+import FAQsScreen from "./components/FAQsScreen";
 
 const NavigationStack = createNativeStackNavigator();
 const logo = require("../../assets/img/Logo-initial.png");
@@ -152,6 +153,7 @@ function MainNavigation(): JSX.Element {
             headerLeft: () => <Button marginRight={5} paddingHorizontal={12} icon={<Feather name='arrow-left' size={20} />} bg='transparent' onPress={() => navigation.goBack()} />,
             headerShadowVisible: false,
         })} />
+        <NavigationStack.Screen name="Main.FAQs" component={FAQsScreen} />
     </NavigationStack.Navigator>
 
 }

@@ -42,6 +42,9 @@ type updateFormType = {
     onUpdateContact: Function,
 };
 
-type FormType = AccountType & EmergencyContactType & updateFormType;
+type FormType = AccountType & EmergencyContactType & updateFormType & {
+    inviteCode: string;
+    updateInviteCode: (code: string) => void;
+};
 
 export type { AccountType, EmergencyContactType, MedicalRecordType, FormType, AccountErrorType, reducerActionType };

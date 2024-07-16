@@ -6,6 +6,8 @@ import React, { PropsWithChildren, useCallback, useContext, useEffect } from "re
 import { AppContext } from "../../contexts/AppContext";
 import { useFocusEffect } from "@react-navigation/native";
 import ConfirmLoginScreen from "./ConfirmLoginScreen";
+import { isEnabledBiometric } from "../../services/authentication";
+import { Platform } from "react-native";
 
 const NavigationStack = createNativeStackNavigator();
 
@@ -17,7 +19,15 @@ function LandingNavigation(props: PropsWithChildren & NativeStackScreenProps<any
 
     useFocusEffect(useCallback(() => {
         if (cognito) {
-            navigation.replace('Confirm.Login');
+            isEnabledBiometric(Platform.OS === 'ios' ? 'ios' : 'android')
+                .then(({ isEnabled, key }) => {
+                    console.log('isEnabled', isEnabled, key)
+                    if (isEnabled) {
+                        navigation.replace('Confirm.Login');
+                    } else {
+                        navigation.replace('App.Main');
+                    }
+                });
         }
         return () => {
 

@@ -550,3 +550,57 @@ export const deleteAccountSettings = /* GraphQL */ `
     }
   }
 `;
+export const createAccountInvites = /* GraphQL */ `
+  mutation CreateAccountInvites(
+    $input: CreateAccountInvitesInput!
+    $condition: ModelAccountInvitesConditionInput
+  ) {
+    createAccountInvites(input: $input, condition: $condition) {
+      id
+      code
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const updateAccountInvites = /* GraphQL */ `
+  mutation UpdateAccountInvites(
+    $input: UpdateAccountInvitesInput!
+    $condition: ModelAccountInvitesConditionInput
+  ) {
+    updateAccountInvites(input: $input, condition: $condition) {
+      id
+      code
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const deleteAccountInvites = /* GraphQL */ `
+  mutation DeleteAccountInvites(
+    $input: DeleteAccountInvitesInput!
+    $condition: ModelAccountInvitesConditionInput
+  ) {
+    deleteAccountInvites(input: $input, condition: $condition) {
+      id
+      code
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;

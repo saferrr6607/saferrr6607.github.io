@@ -1,12 +1,13 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CreateAccountScreen from "./CreateAccountScreen";
 import { Text } from "react-native";
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useReducer, useState } from "react";
 import { AccountType, EmergencyContactType, FormType, MedicalRecordType, reducerActionType } from "./types";
 import MedicalRecordScreen from "./MedicalRecordScreen";
 import OTPScreen from "./OTPScreen";
 import EmergencyContactScreen from "./EmergencyContactScreen";
 import UserVerificationScreen from "./UserVerificationScreen";
+import InviteCodeScreen from "./InviteCodeScreen";
 
 const NavigationStack = createNativeStackNavigator();
 
@@ -104,6 +105,8 @@ const FormContext = createContext<FormType>({
     ...INITIAL_EMERGENCY_CONTACT_STATE,
     onUpdateAccount: () => { },
     onUpdateContact: () => { },
+    inviteCode: '',
+    updateInviteCode: () => { },
 });
 
 function SignUpNavigation(): JSX.Element {
@@ -111,19 +114,27 @@ function SignUpNavigation(): JSX.Element {
     const [account, onUpdateAccount] = useAccountForm();
     const [emergency_contact, onUpdateContact] = useContactForm();
 
+    const [inviteCode, setInviteCode] = useState<string>("");
+    const updateInviteCode = (code: string) => setInviteCode(code);
+
     return <FormContext.Provider value={{
         ...account,
         onUpdateAccount,
-
         ...emergency_contact,
         onUpdateContact,
+        inviteCode,
+        updateInviteCode,
     }}>
         <NavigationStack.Navigator
-            initialRouteName="SignUp.CreateAccount"
+            initialRouteName="SignUp.InviteCode"
             screenOptions={() => ({
                 headerShown: false,
             })}
         >
+            <NavigationStack.Screen
+                name="SignUp.InviteCode"
+                component={InviteCodeScreen}
+            />
             <NavigationStack.Screen
                 name="SignUp.CreateAccount"
                 component={CreateAccountScreen}

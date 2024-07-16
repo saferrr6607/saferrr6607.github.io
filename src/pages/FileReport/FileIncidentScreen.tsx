@@ -220,6 +220,7 @@ function FileIncidentScreen(props: PropsWithChildren & NativeStackScreenProps<an
             }
 
             const formData = new IncidentReport({
+                report_type: reportType,
                 category: [category],
                 datetime: dateTime,
                 description,
