@@ -678,3 +678,72 @@ export const syncAccountSettings = /* GraphQL */ `
     }
   }
 `;
+export const getAccountInvites = /* GraphQL */ `
+  query GetAccountInvites($id: ID!) {
+    getAccountInvites(id: $id) {
+      id
+      code
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const listAccountInvites = /* GraphQL */ `
+  query ListAccountInvites(
+    $filter: ModelAccountInvitesFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listAccountInvites(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        code
+        owner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
+export const syncAccountInvites = /* GraphQL */ `
+  query SyncAccountInvites(
+    $filter: ModelAccountInvitesFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncAccountInvites(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        code
+        owner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;

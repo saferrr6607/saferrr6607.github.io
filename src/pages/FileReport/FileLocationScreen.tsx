@@ -206,6 +206,7 @@ function FileIncidentScreen(props: PropsWithChildren & NativeStackScreenProps<an
             }
 
             const formData = new LocationReport({
+                report_type: reportType,
                 ratings: JSON.stringify(ratings),
                 datetime: dateTime,
                 description,
