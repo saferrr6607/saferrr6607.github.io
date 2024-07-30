@@ -10,7 +10,7 @@ import { AppContext } from "../../contexts/AppContext";
 import { alertUser } from "../../utils/alert";
 import { HeaderText, InputWithError, SubHeader } from "./recipe";
 import { AccountErrorType } from "./types";
-import Ionicons from 'react-native-vector-icons/dist/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 type reducerActionType = {
     type: string,
@@ -63,8 +63,6 @@ function useAccountError(): [AccountErrorType, Function, Function] {
 
 function CreateAccountScreen(props: PropsWithChildren & NativeStackScreenProps<any>): JSX.Element {
 
-    console.log('rendering CreateAccountScreen');
-
     const { navigation } = props;
     const app_ctx = useContext(AppContext);
 
@@ -107,6 +105,7 @@ function CreateAccountScreen(props: PropsWithChildren & NativeStackScreenProps<a
                     given_name: ctx.first_name,
                     family_name: ctx.last_name,
                     email: ctx.email,
+                    // "custom:invite_code": ctx.inviteCode,
                 },
                 autoSignIn: {
                     enabled: true
@@ -145,9 +144,9 @@ function CreateAccountScreen(props: PropsWithChildren & NativeStackScreenProps<a
         height: "100%",
         backgroundColor: "white"
     }}>
-        <ScrollView pt={40} px={16}>
-            <HeaderText mb={4}>Create an account</HeaderText>
-            <SubHeader mb={24}>Step 1/2: Account information</SubHeader>
+        <ScrollView paddingTop={40} paddingHorizontal={16}>
+            <HeaderText marginBottom={4}>Create an account</HeaderText>
+            <SubHeader marginBottom={24}>Step 1/2: Account information</SubHeader>
             <InputWithError
                 value={ctx.first_name}
                 onChangeText={(v: string) => ctx.onUpdateAccount("FIRST_NAME", v)}
@@ -157,7 +156,7 @@ function CreateAccountScreen(props: PropsWithChildren & NativeStackScreenProps<a
                     placeholder: "First name*",
                     returnKeyType: "next",
                 }}
-                mb={12}
+                marginBottom={12}
             />
             <InputWithError
                 value={ctx.last_name}
@@ -168,7 +167,7 @@ function CreateAccountScreen(props: PropsWithChildren & NativeStackScreenProps<a
                     placeholder: "Last name*",
                     returnKeyType: "next",
                 }}
-                mb={12}
+                marginBottom={12}
             />
             <InputWithError
                 value={ctx.email}
@@ -180,7 +179,7 @@ function CreateAccountScreen(props: PropsWithChildren & NativeStackScreenProps<a
                     returnKeyType: "next",
                     keyboardType: "email-address",
                 }}
-                mb={12}
+                marginBottom={12}
             />
             <XStack gap={5}>
                 <InputWithError
@@ -192,14 +191,14 @@ function CreateAccountScreen(props: PropsWithChildren & NativeStackScreenProps<a
                         placeholder: "Password (8+ characters)",
                         secureTextEntry: !showPwd,
                     }}
-                    mb={12}
+                    marginBottom={12}
                     flex={1}
                 />
                 <Button icon={<Ionicons name={showIcon} size={24} />} onPress={() => setShowPwd(v => !v)} />
             </XStack>
             <Text>By continuing, you agree to SafeHer's Terms & Conditions and Privacy Policy.</Text>
         </ScrollView>
-        <Stack mb={24} px={16}>
+        <Stack marginBottom={24} paddingHorizontal={16}>
             <PrimaryButton onPress={validateForm}>Continue</PrimaryButton>
         </Stack>
     </SafeAreaView>

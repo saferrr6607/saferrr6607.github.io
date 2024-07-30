@@ -25,6 +25,7 @@ function DrawerMenu(props: PropsWithChildren & { active: string }) {
     const atTermsOfUse = active == "terms";
     const atDiary = active == "diary";
     const atSettings = active == "settings";
+    const atFAQs = active == "faqs";
 
     const handleLogout = async () => {
         try {
@@ -50,21 +51,24 @@ function DrawerMenu(props: PropsWithChildren & { active: string }) {
     const gotoBiometricsSetup = () => navigation.navigate('Main.Biometrics');
     const gotoSafeWords = () => navigation.navigate('Main.SafeWords');
 
+    const gotoFAQs = () => navigation.navigate("Main.FAQs");
+
     return <Stack style={{ height: "100%", paddingBottom: 10, backgroundColor: "white" }}>
-        <TouchableOpacity onPress={gotoDashboard}><ListItem bg={atHome ? "$secondary" : "initial"} icon={<Icon name="home" size={16} />}>Dashboard</ListItem></TouchableOpacity>
+        <TouchableOpacity onPress={gotoDashboard}><ListItem backgroundColor={atHome ? "$secondary" : "initial"} icon={<Icon name="home" size={16} />}>Dashboard</ListItem></TouchableOpacity>
         <Separator marginVertical={12} />
-        <TouchableOpacity onPress={gotoNotification}><ListItem bg={atNotif ? "$secondary" : "initial"} icon={<Icon name="bell" size={16} />}>Notifications</ListItem></TouchableOpacity>
-        <TouchableOpacity onPress={gotoContacts}><ListItem bg={atNotif ? "$secondary" : "initial"} icon={<Icon name="bell" size={16} />}>Emergency Contacts</ListItem></TouchableOpacity>
-        {/* {Platform.OS == 'android' && <TouchableOpacity onPress={gotoTest}><ListItem bg={atTestSite ? "$secondary" : "initial"} icon={<Icon name="tool" size={16} />}>Testing Space</ListItem></TouchableOpacity>} */}
-        <TouchableOpacity onPress={gotoBiometricsSetup}><ListItem bg={atNotif ? "$secondary" : "initial"} icon={<BioIdIcon width={15} height={15} />}>Enable Biometrics</ListItem></TouchableOpacity>
-        <TouchableOpacity onPress={gotoHotline}><ListItem bg={atNotif ? "$secondary" : "initial"} icon={<Icon name="phone-call" size={16} />}>Hotline Database</ListItem></TouchableOpacity>
-        <TouchableOpacity onPress={gotoCommutingDiary}><ListItem bg={atDiary ? "$secondary" : "initial"} icon={<AntIcon name="book" size={16} />}>Commuting Diary</ListItem></TouchableOpacity>
-        <TouchableOpacity onPress={gotoSafeWords}><ListItem bg={atNotif ? "$secondary" : "initial"} icon={<SafeWordIcon width={16} height={16} />}>SafeWord</ListItem></TouchableOpacity>
-        {/* <Separator marginVertical={12} /> */}
-        {/* <TouchableOpacity onPress={gotoSettings}><ListItem bg={atSettings ? "$secondary" : "initial"} icon={<AntIcon name="setting" size={16} />}>Settings</ListItem></TouchableOpacity> */}
+        <TouchableOpacity onPress={gotoNotification}><ListItem backgroundColor={atNotif ? "$secondary" : "initial"} icon={<Icon name="bell" size={16} />}>Notifications</ListItem></TouchableOpacity>
+        <TouchableOpacity onPress={gotoContacts}><ListItem backgroundColor={atNotif ? "$secondary" : "initial"} icon={<Icon name="bell" size={16} />}>Emergency Contacts</ListItem></TouchableOpacity>
+        {/* {Platform.OS == 'android' && <TouchableOpacity onPress={gotoTest}><ListItem backgroundColor={atTestSite ? "$secondary" : "initial"} icon={<Icon name="tool" size={16} />}>Testing Space</ListItem></TouchableOpacity>} */}
+        <TouchableOpacity onPress={gotoBiometricsSetup}><ListItem backgroundColor={atNotif ? "$secondary" : "initial"} icon={<BioIdIcon width={15} height={15} />}>Enable Biometrics</ListItem></TouchableOpacity>
+        <TouchableOpacity onPress={gotoHotline}><ListItem backgroundColor={atNotif ? "$secondary" : "initial"} icon={<Icon name="phone-call" size={16} />}>Hotline Database</ListItem></TouchableOpacity>
+        {/* <TouchableOpacity onPress={gotoCommutingDiary}><ListItem backgroundColor={atDiary ? "$secondary" : "initial"} icon={<AntIcon name="book" size={16} />}>Commuting Diary</ListItem></TouchableOpacity> */}
+        <TouchableOpacity onPress={gotoSafeWords}><ListItem backgroundColor={atNotif ? "$secondary" : "initial"} icon={<SafeWordIcon width={16} height={16} />}>SafeWord</ListItem></TouchableOpacity>
+        <Separator marginVertical={12} />
+        {/* <TouchableOpacity onPress={gotoSettings}><ListItem backgroundColor={atSettings ? "$secondary" : "initial"} icon={<AntIcon name="setting" size={16} />}>Settings</ListItem></TouchableOpacity> */}
+        <TouchableOpacity onPress={gotoFAQs}><ListItem backgroundColor={atFAQs ? "$secondary" : "initial"} icon={<AntIcon name="questioncircleo" size={16} />}>FAQs</ListItem></TouchableOpacity>
         <View flex={1} />
-        <TouchableOpacity onPress={gotoTerms}><ListItem bg={atTermsOfUse ? "$secondary" : "initial"} icon={<Icon name="book" size={16} />}>Terms of Use and Privacy Policy</ListItem></TouchableOpacity>
-        <Separator mb={12} mt={4} />
+        <TouchableOpacity onPress={gotoTerms}><ListItem backgroundColor={atTermsOfUse ? "$secondary" : "initial"} icon={<Icon name="book" size={16} />}>Terms of Use and Privacy Policy</ListItem></TouchableOpacity>
+        <Separator marginBottom={12} marginTop={4} />
         <TouchableOpacity onPress={handleLogout}><ListItem icon={<Icon name="log-out" size={16} />}>Log out</ListItem></TouchableOpacity>
     </Stack>
 
