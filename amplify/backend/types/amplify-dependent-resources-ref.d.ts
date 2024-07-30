@@ -7,7 +7,8 @@ export type AmplifyDependentResourcesAttributes = {
     },
     "safeher": {
       "GraphQLAPIEndpointOutput": "string",
-      "GraphQLAPIIdOutput": "string"
+      "GraphQLAPIIdOutput": "string",
+      "GraphQLAPIKeyOutput": "string"
     },
     "verifySignature": {
       "ApiId": "string",

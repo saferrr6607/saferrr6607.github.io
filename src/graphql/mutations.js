@@ -371,6 +371,7 @@ export const createUserVerification = /* GraphQL */ `
       selfie_name
       selfie_mime_type
       selfie_key
+      verified
       owner
       createdAt
       updatedAt
@@ -394,6 +395,7 @@ export const updateUserVerification = /* GraphQL */ `
       selfie_name
       selfie_mime_type
       selfie_key
+      verified
       owner
       createdAt
       updatedAt
@@ -417,6 +419,7 @@ export const deleteUserVerification = /* GraphQL */ `
       selfie_name
       selfie_mime_type
       selfie_key
+      verified
       owner
       createdAt
       updatedAt
@@ -541,6 +544,111 @@ export const deleteAccountSettings = /* GraphQL */ `
       faceIDKey
       enableSafeWords
       owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const createAccountInvites = /* GraphQL */ `
+  mutation CreateAccountInvites(
+    $input: CreateAccountInvitesInput!
+    $condition: ModelAccountInvitesConditionInput
+  ) {
+    createAccountInvites(input: $input, condition: $condition) {
+      id
+      code
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const updateAccountInvites = /* GraphQL */ `
+  mutation UpdateAccountInvites(
+    $input: UpdateAccountInvitesInput!
+    $condition: ModelAccountInvitesConditionInput
+  ) {
+    updateAccountInvites(input: $input, condition: $condition) {
+      id
+      code
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const deleteAccountInvites = /* GraphQL */ `
+  mutation DeleteAccountInvites(
+    $input: DeleteAccountInvitesInput!
+    $condition: ModelAccountInvitesConditionInput
+  ) {
+    deleteAccountInvites(input: $input, condition: $condition) {
+      id
+      code
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const createMobileAppOptions = /* GraphQL */ `
+  mutation CreateMobileAppOptions(
+    $input: CreateMobileAppOptionsInput!
+    $condition: ModelMobileAppOptionsConditionInput
+  ) {
+    createMobileAppOptions(input: $input, condition: $condition) {
+      requireVerifiedAccount
+      id
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const updateMobileAppOptions = /* GraphQL */ `
+  mutation UpdateMobileAppOptions(
+    $input: UpdateMobileAppOptionsInput!
+    $condition: ModelMobileAppOptionsConditionInput
+  ) {
+    updateMobileAppOptions(input: $input, condition: $condition) {
+      requireVerifiedAccount
+      id
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const deleteMobileAppOptions = /* GraphQL */ `
+  mutation DeleteMobileAppOptions(
+    $input: DeleteMobileAppOptionsInput!
+    $condition: ModelMobileAppOptionsConditionInput
+  ) {
+    deleteMobileAppOptions(input: $input, condition: $condition) {
+      requireVerifiedAccount
+      id
       createdAt
       updatedAt
       _version

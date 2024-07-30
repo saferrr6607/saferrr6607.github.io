@@ -2,7 +2,13 @@ import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-
 // @ts-ignore
 import { LazyLoading, LazyLoadingDisabled } from "@aws-amplify/datastore";
 
-
+export enum InviteCodes {
+  SAFE_HER2024 = "SafeHer2024",
+  SAFE_HER_COMMUTE = "SafeHerCommute",
+  SDRC1979 = "SDRC1979",
+  IDRC_RESPONSIBLE_AI = "IDRC_ResponsibleAI",
+  SDG5 = "SDG5"
+}
 
 
 
@@ -226,6 +232,7 @@ type EagerUserVerification = {
   readonly selfie_name?: string | null;
   readonly selfie_mime_type?: string | null;
   readonly selfie_key?: string | null;
+  readonly verified?: boolean | null;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -243,6 +250,7 @@ type LazyUserVerification = {
   readonly selfie_name?: string | null;
   readonly selfie_mime_type?: string | null;
   readonly selfie_key?: string | null;
+  readonly verified?: boolean | null;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -322,4 +330,62 @@ export declare type AccountSettings = LazyLoading extends LazyLoadingDisabled ? 
 
 export declare const AccountSettings: (new (init: ModelInit<AccountSettings>) => AccountSettings) & {
   copyOf(source: AccountSettings, mutator: (draft: MutableModel<AccountSettings>) => MutableModel<AccountSettings> | void): AccountSettings;
+}
+
+type EagerAccountInvites = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<AccountInvites, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly code?: InviteCodes | keyof typeof InviteCodes | null;
+  readonly owner?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyAccountInvites = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<AccountInvites, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly code?: InviteCodes | keyof typeof InviteCodes | null;
+  readonly owner?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type AccountInvites = LazyLoading extends LazyLoadingDisabled ? EagerAccountInvites : LazyAccountInvites
+
+export declare const AccountInvites: (new (init: ModelInit<AccountInvites>) => AccountInvites) & {
+  copyOf(source: AccountInvites, mutator: (draft: MutableModel<AccountInvites>) => MutableModel<AccountInvites> | void): AccountInvites;
+}
+
+type EagerMobileAppOptions = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<MobileAppOptions, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly requireVerifiedAccount?: boolean | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyMobileAppOptions = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<MobileAppOptions, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly requireVerifiedAccount?: boolean | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type MobileAppOptions = LazyLoading extends LazyLoadingDisabled ? EagerMobileAppOptions : LazyMobileAppOptions
+
+export declare const MobileAppOptions: (new (init: ModelInit<MobileAppOptions>) => MobileAppOptions) & {
+  copyOf(source: MobileAppOptions, mutator: (draft: MutableModel<MobileAppOptions>) => MutableModel<MobileAppOptions> | void): MobileAppOptions;
 }

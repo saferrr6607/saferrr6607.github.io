@@ -371,6 +371,7 @@ export const onCreateUserVerification = /* GraphQL */ `
       selfie_name
       selfie_mime_type
       selfie_key
+      verified
       owner
       createdAt
       updatedAt
@@ -394,6 +395,7 @@ export const onUpdateUserVerification = /* GraphQL */ `
       selfie_name
       selfie_mime_type
       selfie_key
+      verified
       owner
       createdAt
       updatedAt
@@ -417,6 +419,7 @@ export const onDeleteUserVerification = /* GraphQL */ `
       selfie_name
       selfie_mime_type
       selfie_key
+      verified
       owner
       createdAt
       updatedAt
@@ -541,6 +544,108 @@ export const onDeleteAccountSettings = /* GraphQL */ `
       faceIDKey
       enableSafeWords
       owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const onCreateAccountInvites = /* GraphQL */ `
+  subscription OnCreateAccountInvites(
+    $filter: ModelSubscriptionAccountInvitesFilterInput
+    $owner: String
+  ) {
+    onCreateAccountInvites(filter: $filter, owner: $owner) {
+      id
+      code
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const onUpdateAccountInvites = /* GraphQL */ `
+  subscription OnUpdateAccountInvites(
+    $filter: ModelSubscriptionAccountInvitesFilterInput
+    $owner: String
+  ) {
+    onUpdateAccountInvites(filter: $filter, owner: $owner) {
+      id
+      code
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const onDeleteAccountInvites = /* GraphQL */ `
+  subscription OnDeleteAccountInvites(
+    $filter: ModelSubscriptionAccountInvitesFilterInput
+    $owner: String
+  ) {
+    onDeleteAccountInvites(filter: $filter, owner: $owner) {
+      id
+      code
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const onCreateMobileAppOptions = /* GraphQL */ `
+  subscription OnCreateMobileAppOptions(
+    $filter: ModelSubscriptionMobileAppOptionsFilterInput
+  ) {
+    onCreateMobileAppOptions(filter: $filter) {
+      requireVerifiedAccount
+      id
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const onUpdateMobileAppOptions = /* GraphQL */ `
+  subscription OnUpdateMobileAppOptions(
+    $filter: ModelSubscriptionMobileAppOptionsFilterInput
+  ) {
+    onUpdateMobileAppOptions(filter: $filter) {
+      requireVerifiedAccount
+      id
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const onDeleteMobileAppOptions = /* GraphQL */ `
+  subscription OnDeleteMobileAppOptions(
+    $filter: ModelSubscriptionMobileAppOptionsFilterInput
+  ) {
+    onDeleteMobileAppOptions(filter: $filter) {
+      requireVerifiedAccount
+      id
       createdAt
       updatedAt
       _version

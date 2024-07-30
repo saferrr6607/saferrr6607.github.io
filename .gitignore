@@ -70,6 +70,14 @@ yarn-error.log
 
 misc/
 
+
+.env
+.env*.local
+
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
 amplify/.config/local-*
@@ -91,10 +99,3 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
-
-.env
-.env*.local
-
-.yarn/*
-!.yarn/releases
-!.yarn/plugins

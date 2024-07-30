@@ -5,5 +5,5 @@ export const uploadFileDefault = {
         path: '',
     },
     preview: '',
-} as const;
+};
 export type UploadFileType = typeof uploadFileDefault;

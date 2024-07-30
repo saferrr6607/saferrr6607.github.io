@@ -1,11 +1,11 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { PropsWithChildren, useEffect, useRef, useState } from "react";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Platform, StyleSheet, TouchableOpacity } from "react-native";
 import { Button, Circle, Image, ScrollView, Spinner, Square, Stack, Text, XStack } from "tamagui";
 import PrimaryButton from "../../components/PrimaryButton";
 import { HeaderText, SubHeader } from "./recipe";
-import FontAwesome from 'react-native-vector-icons/dist/FontAwesome';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Camera, useCameraDevices } from "react-native-vision-camera";
 import DocumentPicker from 'react-native-document-picker'
 import * as mime from 'react-native-mime-types';
@@ -114,12 +114,18 @@ function IDScreen(props: PropsWithChildren & DefaultPhaseScreenProps & { idFile:
                     setUploadFile(uploadFile);
 
                 } catch (err) {
-                    console.log('err@pickDoc', err.message);
+                    let message = '';
+                    if (DocumentPicker.isCancel(err)) {
+                        message = 'User cancelled document picker';
+                    } else {
+                        message = 'Unknown error: ' + JSON.stringify(err);
+                    }
+                    console.log('err@pickDoc', message);
                 }
             });
     }
 
-    return <Stack flex={1} px={10}>
+    return <Stack flex={1} paddingHorizontal={10}>
         {/* <Image></Image> */}
         <Text lineHeight={12 * 1.25} fontSize={12} fontWeight="500" color="$textSecondary">
             Upload your ID to secure your account and unlock more SafeHer features.
@@ -178,7 +184,7 @@ function FaceScreen(props: PropsWithChildren & DefaultPhaseScreenProps & { selfi
     const handleTakeSelfie = async () => {
         try {
             const photo = Platform.OS === 'android' ? await cameraRef.current?.takeSnapshot({ quality: 85, skipMetadata: true, }) : await cameraRef.current?.takePhoto({});
-            const image_path = photo?.path;
+            const image_path = photo?.path ?? '';
 
             const fs_stat = await ReactNativeBlobUtil.fs.stat(image_path);
 
@@ -198,18 +204,20 @@ function FaceScreen(props: PropsWithChildren & DefaultPhaseScreenProps & { selfi
         }
     }
 
+    const cameraDevice = devices.front || devices.back;
+
     if (!show) return <></>;
 
-    return <Stack flex={1} px={10}>
+    return <Stack flex={1} paddingHorizontal={10}>
         {/* <Image></Image> */}
         <Text lineHeight={12 * 1.25} fontSize={12} fontWeight="500" color="$textSecondary">
             To validate your identity, we require you to take a selfie.
         </Text>
         <Stack style={{ flex: 1 }} marginVertical={10}>
-            {active && <Camera
+            {(active && cameraDevice !== undefined) && <Camera
                 ref={cameraRef}
                 style={StyleSheet.absoluteFill}
-                device={devices.front || devices.back}
+                device={cameraDevice}
                 photo={true}
                 isActive={active}
             />}
@@ -241,7 +249,7 @@ function InitialScreen(props: PropsWithChildren & DefaultPhaseScreenProps): JSX.
 
     return <Stack justifyContent="center" alignItems="center" flex={1}>
         {/* <Image></Image> */}
-        <Text textAlign="center" lineHeight={12 * 1.25} px={10} fontSize={12} fontWeight="500" color="$textSecondary">To keep the app safe to use for everyone, we encourage our users to verify their identity by uploading a valid ID and taking a selfie.</Text>
+        <Text textAlign="center" lineHeight={12 * 1.25} paddingHorizontal={10} fontSize={12} fontWeight="500" color="$textSecondary">To keep the app safe to use for everyone, we encourage our users to verify their identity by uploading a valid ID and taking a selfie.</Text>
     </Stack>
 }
 InitialScreen.displayName = "InitialScreen";
@@ -256,8 +264,11 @@ async function upsertUserVerification(data: UserVerificationType) {
             const original = myData[0];
             return DataStore.save(UserVerification.copyOf(original, updated => {
                 for (let key in data) {
-                    if (key == 'id') continue;
-                    updated[key] = data[key];
+                    const _key = key as keyof UserVerificationType;
+                    if (_key == 'id') continue;
+                    if (_key == 'createdAt') continue;
+                    if (_key == 'updatedAt') continue;
+                    updated[_key] = data[_key];
                 }
             }));
         } else {
@@ -266,7 +277,16 @@ async function upsertUserVerification(data: UserVerificationType) {
         }
 
     } catch (err) {
-        console.log('err@upsertUserVerification', err.message);
+        let message = '';
+        if (err instanceof Error) {
+            message = err.message;
+        } else if (typeof err == 'string') {
+            message = err;
+        } else {
+            message = 'Error unknown';
+            console.log(err);
+        }
+        console.log('err@upsertUserVerification', message);
     }
 
 }
@@ -307,7 +327,16 @@ function UserVerificationScreen(props: PropsWithChildren & NativeStackScreenProp
             setPhase('face');
 
         } catch (err) {
-            console.log('err@uplaodID', err.message);
+            let message = '';
+            if (err instanceof Error) {
+                message = err.message;
+            } else if (typeof err == 'string') {
+                message = err;
+            } else {
+                message = 'Error unknown';
+                console.log(err);
+            }
+            console.log('err@uplaodID', message);
         }
 
         setUploading(false);
@@ -339,7 +368,16 @@ function UserVerificationScreen(props: PropsWithChildren & NativeStackScreenProp
             setPhase('initial');
 
         } catch (err) {
-            console.log('err@selfie', err.message);
+            let message = '';
+            if (err instanceof Error) {
+                message = err.message;
+            } else if (typeof err == 'string') {
+                message = err;
+            } else {
+                message = 'Error unknown';
+                console.log(err);
+            }
+            console.log('err@selfie', message);
         }
 
         setUploading(false);
@@ -368,20 +406,20 @@ function UserVerificationScreen(props: PropsWithChildren & NativeStackScreenProp
         height: "100%",
         backgroundColor: "white"
     }}>
-        <ScrollView pt={40} px={16} contentContainerStyle={{ flex: 1 }}>
-            <HeaderText mb={4}>Create an account</HeaderText>
-            <SubHeader mb={24}>Step 2/2: Account verification</SubHeader>
+        <ScrollView paddingTop={40} paddingHorizontal={16} contentContainerStyle={{ flex: 1 }}>
+            <HeaderText marginBottom={4}>Create an account</HeaderText>
+            <SubHeader marginBottom={24}>Step 2/2: Account verification</SubHeader>
             <InitialScreen show={phase == 'initial'} />
             <IDScreen show={phase == 'id'} idFile={idFile} onUpdateId={handleOnUpdateId} />
             <FaceScreen show={phase == 'face'} selfie={selfie} onUpdateSelfie={handleOnUpdateSelfie} />
         </ScrollView>
-        <Stack mb={24} px={16}>
+        <Stack marginBottom={24} paddingHorizontal={16}>
             <PrimaryButton
                 onPress={handleOnContinue}
                 disabled={Boolean(uploading)}
             >
-                {uploading == 'id' && <><Spinner color='white' mr={5} /><Text color='white'>Uploading ID</Text></>}
-                {uploading == 'face' && <><Spinner color='white' mr={5} /><Text color='white'>Uploading Selfie</Text></>}
+                {uploading == 'id' && <><Spinner color='white' marginRight={5} /><Text color='white'>Uploading ID</Text></>}
+                {uploading == 'face' && <><Spinner color='white' marginRight={5} /><Text color='white'>Uploading Selfie</Text></>}
                 {!uploading && `Continue`}
             </PrimaryButton>
         </Stack>

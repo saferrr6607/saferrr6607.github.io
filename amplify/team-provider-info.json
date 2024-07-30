@@ -1,4 +1,50 @@
 {
+  "prod": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-safeher-prod-0e005-authRole",
+      "UnauthRoleArn": "arn:aws:iam::404885533412:role/amplify-safeher-prod-0e005-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::404885533412:role/amplify-safeher-prod-0e005-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-safeher-prod-0e005-deployment",
+      "UnauthRoleName": "amplify-safeher-prod-0e005-unauthRole",
+      "StackName": "amplify-safeher-prod-0e005",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:404885533412:stack/amplify-safeher-prod-0e005/86a4e740-4e7c-11ef-9637-06d05e6ee4eb",
+      "AmplifyAppId": "d383m5t2ak2034",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-safeher-prod-0e005-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
+    },
+    "categories": {
+      "auth": {
+        "safeher2fc41a60": {},
+        "userPoolGroups": {}
+      },
+      "function": {
+        "AdminQueries195a40f7": {
+          "deploymentBucketName": "amplify-safeher-prod-0e005-deployment",
+          "s3Key": "amplify-builds/AdminQueries195a40f7-706835326d6d6671686e-build.zip"
+        },
+        "safehera6944f9f": {
+          "deploymentBucketName": "amplify-safeher-prod-0e005-deployment",
+          "s3Key": "amplify-builds/safehera6944f9f-6d6c4239337943665248-build.zip"
+        },
+        "safeherb60ec900": {
+          "deploymentBucketName": "amplify-safeher-prod-0e005-deployment",
+          "s3Key": "amplify-builds/safeherb60ec900-6e74524874356a484d4c-build.zip"
+        },
+        "safehere82cfcbd": {
+          "deploymentBucketName": "amplify-safeher-prod-0e005-deployment",
+          "s3Key": "amplify-builds/safehere82cfcbd-5746706630794950684b-build.zip"
+        }
+      },
+      "storage": {
+        "s308ddd210": {}
+      },
+      "api": {
+        "AdminQueries": {},
+        "safeher": {},
+        "verifySignature": {}
+      }
+    }
+  },
   "dev": {
     "awscloudformation": {
       "AuthRoleName": "amplify-safeher-dev-235630-authRole",

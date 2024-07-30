@@ -447,6 +447,7 @@ export const getUserVerification = /* GraphQL */ `
       selfie_name
       selfie_mime_type
       selfie_key
+      verified
       owner
       createdAt
       updatedAt
@@ -476,6 +477,7 @@ export const listUserVerifications = /* GraphQL */ `
         selfie_name
         selfie_mime_type
         selfie_key
+        verified
         owner
         createdAt
         updatedAt
@@ -511,6 +513,7 @@ export const syncUserVerifications = /* GraphQL */ `
         selfie_name
         selfie_mime_type
         selfie_key
+        verified
         owner
         createdAt
         updatedAt
@@ -665,6 +668,145 @@ export const syncAccountSettings = /* GraphQL */ `
         faceIDKey
         enableSafeWords
         owner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
+export const getAccountInvites = /* GraphQL */ `
+  query GetAccountInvites($id: ID!) {
+    getAccountInvites(id: $id) {
+      id
+      code
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const listAccountInvites = /* GraphQL */ `
+  query ListAccountInvites(
+    $filter: ModelAccountInvitesFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listAccountInvites(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        code
+        owner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
+export const syncAccountInvites = /* GraphQL */ `
+  query SyncAccountInvites(
+    $filter: ModelAccountInvitesFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncAccountInvites(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        code
+        owner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
+export const getMobileAppOptions = /* GraphQL */ `
+  query GetMobileAppOptions($id: ID!) {
+    getMobileAppOptions(id: $id) {
+      requireVerifiedAccount
+      id
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const listMobileAppOptions = /* GraphQL */ `
+  query ListMobileAppOptions(
+    $filter: ModelMobileAppOptionsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listMobileAppOptions(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        requireVerifiedAccount
+        id
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
+export const syncMobileAppOptions = /* GraphQL */ `
+  query SyncMobileAppOptions(
+    $filter: ModelMobileAppOptionsFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncMobileAppOptions(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        requireVerifiedAccount
+        id
         createdAt
         updatedAt
         _version
