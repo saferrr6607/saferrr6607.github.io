@@ -37,7 +37,7 @@ function InviteCodeScreen(props: PropsWithChildren & NativeStackScreenProps<any>
         alertUser('Invite code accepted');
         ctx.updateInviteCode(inviteCode);
 
-        navigation.navigate("SignUp.CreateAccount");
+        navigation.replace("SignUp.CreateAccount");
 
     };
 

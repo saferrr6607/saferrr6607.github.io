@@ -171,27 +171,7 @@ function OTPScreen(props: PropsWithChildren & NativeStackScreenProps<any>): JSX.
             email,
             otp,
         ).then(async (resp) => {
-
-            const enumCodeKey: (keyof typeof InviteCodes | 'INVALID_CODE') = Object.keys(InviteCodes).find((code) => {
-                return InviteCodes[code as keyof typeof InviteCodes] === ctx.inviteCode;
-            }) as keyof typeof InviteCodes | 'INVALID_CODE' || 'INVALID_CODE';
-
-            console.log('enumCodeKey', enumCodeKey);
-
-            if (enumCodeKey !== 'INVALID_CODE') {
-                const _data = new AccountInvites({
-                    code: InviteCodes[enumCodeKey],
-                });
-                console.log('save invite record', _data);
-                return DataStore.save(_data)
-                    .then(resp => {
-                        navigation.replace('SignUp.MedicalRecord');
-                    });
-            } else {
-                alertUser("Invalid invite code!");
-                Auth.signOut();
-                navigation.replace('App.Landing');
-            }
+            navigation.replace('SignUp.MedicalRecord');
 
         }).catch((err) => {
             const _err = err.message || JSON.stringify(err);

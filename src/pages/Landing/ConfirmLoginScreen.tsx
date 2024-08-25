@@ -3,7 +3,7 @@ import { Auth, DataStore } from "aws-amplify";
 import React, { PropsWithChildren, useCallback, useContext, useEffect, useState } from "react";
 import { Alert, Platform, Pressable, useWindowDimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Ionicons from 'react-native-vector-icons/dist/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Button, Circle, getTokens, Image, Input, Stack, Text, XStack } from "tamagui";
 import PrimaryButton from "../../components/PrimaryButton";
 import SecondaryButton from "../../components/SecondaryButton";
@@ -46,7 +46,8 @@ function ConfirmLoginScreen(props: PropsWithChildren & NativeStackScreenProps<an
     const [email, setEmail] = useState<string>('');
     const maskedName = maskName(userName);
 
-    const secondary = getTokens().color.secondary.val;
+    // @ts-ignore
+    const secondary = getTokens().color.secondary.val || getTokens().color.secondary;
 
     useEffect(() => {
         // Auth.currentSession()

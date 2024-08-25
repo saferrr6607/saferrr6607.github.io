@@ -1,6 +1,6 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Auth } from "aws-amplify";
+import { API, Auth, DataStore, graphqlOperation } from "aws-amplify";
 import React, { PropsWithChildren, useCallback, useContext, useReducer, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button, ScrollView, Stack, Text, XStack } from "tamagui";
@@ -11,6 +11,11 @@ import { alertUser } from "../../utils/alert";
 import { HeaderText, InputWithError, SubHeader } from "./recipe";
 import { AccountErrorType } from "./types";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { AccountInvites, InviteCodes, LazyAccountInvites } from "../../models";
+import * as mutations from "../../graphql/mutations";
+import { GraphQLQuery, GRAPHQL_AUTH_MODE } from '@aws-amplify/api';
+import awsmobile from "../../aws-exports";
+
 
 type reducerActionType = {
     type: string,
@@ -112,8 +117,37 @@ function CreateAccountScreen(props: PropsWithChildren & NativeStackScreenProps<a
                 }
             })
                 .then(resp => {
+                    console.log('account created');
                     console.log(resp);
-                    navigation.replace("SignUp.OTP");
+
+                    const enumCodeKey: (keyof typeof InviteCodes | 'INVALID_CODE') = Object.keys(InviteCodes).find((code) => {
+                        return InviteCodes[code as keyof typeof InviteCodes] === ctx.inviteCode;
+                    }) as keyof typeof InviteCodes | 'INVALID_CODE' || 'INVALID_CODE';
+
+                    if (enumCodeKey !== 'INVALID_CODE') {
+                        return API.graphql<GraphQLQuery<LazyAccountInvites>>({
+                            query: mutations.createAccountInvites,
+                            variables: {
+                                input: {
+                                    code: InviteCodes[enumCodeKey],
+                                    cognito_id: resp.userSub,
+                                },
+                            },
+                            authMode: GRAPHQL_AUTH_MODE.API_KEY,
+                            authToken: awsmobile["aws_appsync_apiKey"],
+                        })
+                            .then(resp => {
+                                console.log('api call', resp);
+                                navigation.replace('SignUp.OTP');
+                            })
+                            .catch(err => {
+                                console.log('error@API CALL', err);
+                            });
+                    } else {
+                        alertUser("Invalid invite code!");
+                        Auth.signOut();
+                        navigation.replace('App.Landing');
+                    }
                 })
                 .catch(err => {
                     console.log("err", err);

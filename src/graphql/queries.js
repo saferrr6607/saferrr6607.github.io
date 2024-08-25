@@ -686,7 +686,7 @@ export const getAccountInvites = /* GraphQL */ `
     getAccountInvites(id: $id) {
       id
       code
-      owner
+      cognito_id
       createdAt
       updatedAt
       _version
@@ -706,7 +706,7 @@ export const listAccountInvites = /* GraphQL */ `
       items {
         id
         code
-        owner
+        cognito_id
         createdAt
         updatedAt
         _version
@@ -736,7 +736,7 @@ export const syncAccountInvites = /* GraphQL */ `
       items {
         id
         code
-        owner
+        cognito_id
         createdAt
         updatedAt
         _version
@@ -807,6 +807,75 @@ export const syncMobileAppOptions = /* GraphQL */ `
       items {
         requireVerifiedAccount
         id
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
+export const getSignupStage = /* GraphQL */ `
+  query GetSignupStage($id: ID!) {
+    getSignupStage(id: $id) {
+      id
+      step
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const listSignupStages = /* GraphQL */ `
+  query ListSignupStages(
+    $filter: ModelSignupStageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listSignupStages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        step
+        owner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
+export const syncSignupStages = /* GraphQL */ `
+  query SyncSignupStages(
+    $filter: ModelSignupStageFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncSignupStages(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        step
+        owner
         createdAt
         updatedAt
         _version

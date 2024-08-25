@@ -1,9 +1,9 @@
+import { useFocusEffect } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { PropsWithChildren, useCallback, useContext } from "react";
-import { Button, Image, Stack, styled } from "tamagui";
+import React, { PropsWithChildren, useCallback, useContext } from "react";
+import { Image, Stack, styled } from "tamagui";
 import PrimaryButton from "../../components/PrimaryButton";
 import SecondaryButton from "../../components/SecondaryButton";
-import { useFocusEffect } from "@react-navigation/native";
 import { AppContext } from "../../contexts/AppContext";
 
 const logo = require("../../assets/img/Homepage.png");
@@ -45,13 +45,14 @@ function InviteScreen(props: PropsWithChildren & NativeStackScreenProps<any>): J
     return <Backdrop>
         <Image
             source={logo}
-            resizeMode="contain"
+            // resizeMode="contain"
+            objectFit="contain"
             position="absolute"
             top={0}
         />
-        <Stack px={16} mb={24} width={"100%"}>
+        <Stack paddingHorizontal={16} marginBottom={24} width={"100%"}>
             <PrimaryButton
-                mb={8}
+                marginBottom={8}
                 onPress={handleOnSignup}
             >
                 Create an account

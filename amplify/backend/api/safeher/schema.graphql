@@ -78,6 +78,8 @@ type UserVerification @model @auth(rules: [
   selfie_mime_type: String
   selfie_key: String
   verified: Boolean
+  verify_status: String
+  denied_reason: String
   owner: String
 }
 
@@ -107,16 +109,24 @@ enum InviteCodes {
 }
 
 type AccountInvites @model @auth(rules: [
-  { allow: owner, ownerField: "owner", operations: [create, update, delete, read] },
-  { allow: groups, groups: ["ADMIN"], operations: [read] }
+  {allow: public, operations: [create]}
+  { allow: groups, groups: ["ADMIN"], operations: [read] },
 ]) {
   id: ID!
   code: InviteCodes
-  owner: String
+  cognito_id: String
 }
 
 type MobileAppOptions @model @auth(rules: [
   { allow: public, operations: [read] }
 ]) {
   requireVerifiedAccount: Boolean
+}
+
+type SignupStage @model @auth(rules: [
+  { allow: owner, ownerField: "owner", operations: [create, update, delete, read] },
+]) {
+  id: ID!
+  step: String
+  owner: String
 }

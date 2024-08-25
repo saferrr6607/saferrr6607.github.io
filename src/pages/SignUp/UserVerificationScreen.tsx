@@ -322,6 +322,9 @@ function UserVerificationScreen(props: PropsWithChildren & NativeStackScreenProp
                 id_key: s3.key,
                 id_mime_type: uploadFile.mime_type,
                 id_name: uploadFile.name,
+                verified: false,
+                verify_status: 'uploading',
+                denied_reason: '',
             });
 
             setPhase('face');
@@ -362,6 +365,7 @@ function UserVerificationScreen(props: PropsWithChildren & NativeStackScreenProp
                 selfie_key: s3.key,
                 selfie_mime_type: uploadFile.mime_type,
                 selfie_name: uploadFile.name,
+                verify_status: 'verifying',
             });
 
             navigation.navigate("SignUp.EmergencyContact");

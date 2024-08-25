@@ -561,7 +561,7 @@ export const createAccountInvites = /* GraphQL */ `
     createAccountInvites(input: $input, condition: $condition) {
       id
       code
-      owner
+      cognito_id
       createdAt
       updatedAt
       _version
@@ -579,7 +579,7 @@ export const updateAccountInvites = /* GraphQL */ `
     updateAccountInvites(input: $input, condition: $condition) {
       id
       code
-      owner
+      cognito_id
       createdAt
       updatedAt
       _version
@@ -597,7 +597,7 @@ export const deleteAccountInvites = /* GraphQL */ `
     deleteAccountInvites(input: $input, condition: $condition) {
       id
       code
-      owner
+      cognito_id
       createdAt
       updatedAt
       _version
@@ -649,6 +649,60 @@ export const deleteMobileAppOptions = /* GraphQL */ `
     deleteMobileAppOptions(input: $input, condition: $condition) {
       requireVerifiedAccount
       id
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const createSignupStage = /* GraphQL */ `
+  mutation CreateSignupStage(
+    $input: CreateSignupStageInput!
+    $condition: ModelSignupStageConditionInput
+  ) {
+    createSignupStage(input: $input, condition: $condition) {
+      id
+      step
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const updateSignupStage = /* GraphQL */ `
+  mutation UpdateSignupStage(
+    $input: UpdateSignupStageInput!
+    $condition: ModelSignupStageConditionInput
+  ) {
+    updateSignupStage(input: $input, condition: $condition) {
+      id
+      step
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const deleteSignupStage = /* GraphQL */ `
+  mutation DeleteSignupStage(
+    $input: DeleteSignupStageInput!
+    $condition: ModelSignupStageConditionInput
+  ) {
+    deleteSignupStage(input: $input, condition: $condition) {
+      id
+      step
+      owner
       createdAt
       updatedAt
       _version

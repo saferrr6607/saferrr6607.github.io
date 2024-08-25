@@ -556,12 +556,11 @@ export const onDeleteAccountSettings = /* GraphQL */ `
 export const onCreateAccountInvites = /* GraphQL */ `
   subscription OnCreateAccountInvites(
     $filter: ModelSubscriptionAccountInvitesFilterInput
-    $owner: String
   ) {
-    onCreateAccountInvites(filter: $filter, owner: $owner) {
+    onCreateAccountInvites(filter: $filter) {
       id
       code
-      owner
+      cognito_id
       createdAt
       updatedAt
       _version
@@ -574,12 +573,11 @@ export const onCreateAccountInvites = /* GraphQL */ `
 export const onUpdateAccountInvites = /* GraphQL */ `
   subscription OnUpdateAccountInvites(
     $filter: ModelSubscriptionAccountInvitesFilterInput
-    $owner: String
   ) {
-    onUpdateAccountInvites(filter: $filter, owner: $owner) {
+    onUpdateAccountInvites(filter: $filter) {
       id
       code
-      owner
+      cognito_id
       createdAt
       updatedAt
       _version
@@ -592,12 +590,11 @@ export const onUpdateAccountInvites = /* GraphQL */ `
 export const onDeleteAccountInvites = /* GraphQL */ `
   subscription OnDeleteAccountInvites(
     $filter: ModelSubscriptionAccountInvitesFilterInput
-    $owner: String
   ) {
-    onDeleteAccountInvites(filter: $filter, owner: $owner) {
+    onDeleteAccountInvites(filter: $filter) {
       id
       code
-      owner
+      cognito_id
       createdAt
       updatedAt
       _version
@@ -646,6 +643,60 @@ export const onDeleteMobileAppOptions = /* GraphQL */ `
     onDeleteMobileAppOptions(filter: $filter) {
       requireVerifiedAccount
       id
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const onCreateSignupStage = /* GraphQL */ `
+  subscription OnCreateSignupStage(
+    $filter: ModelSubscriptionSignupStageFilterInput
+    $owner: String
+  ) {
+    onCreateSignupStage(filter: $filter, owner: $owner) {
+      id
+      step
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const onUpdateSignupStage = /* GraphQL */ `
+  subscription OnUpdateSignupStage(
+    $filter: ModelSubscriptionSignupStageFilterInput
+    $owner: String
+  ) {
+    onUpdateSignupStage(filter: $filter, owner: $owner) {
+      id
+      step
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const onDeleteSignupStage = /* GraphQL */ `
+  subscription OnDeleteSignupStage(
+    $filter: ModelSubscriptionSignupStageFilterInput
+    $owner: String
+  ) {
+    onDeleteSignupStage(filter: $filter, owner: $owner) {
+      id
+      step
+      owner
       createdAt
       updatedAt
       _version

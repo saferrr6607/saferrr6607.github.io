@@ -1,9 +1,9 @@
+import React, { PropsWithChildren, useContext, useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Auth } from "aws-amplify";
-import React, { PropsWithChildren, useContext, useState } from "react";
-import { Alert, Pressable, useWindowDimensions } from "react-native";
+import { Pressable, useWindowDimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Ionicons from 'react-native-vector-icons/dist/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Button, getTokens, Image, Stack, Text, XStack } from "tamagui";
 import PrimaryButton from "../../components/PrimaryButton";
 import { AppContext } from "../../contexts/AppContext";
@@ -22,7 +22,8 @@ function LoginScreen(props: PropsWithChildren & NativeStackScreenProps<any>): JS
 
     const { width, height } = useWindowDimensions();
 
-    const secondary = getTokens().color.secondary.val;
+    // @ts-ignore
+    const secondary = getTokens().color.secondary.val || getTokens().color.secondary;
 
     const handleOnSignup = () => {
         navigation.navigate("App.SignUp");
@@ -39,6 +40,17 @@ function LoginScreen(props: PropsWithChildren & NativeStackScreenProps<any>): JS
                 setPwd('');
             })
             .catch(err => {
+                console.log('@lgin', err.message);
+                if (err.message === 'User is not confirmed.') {
+                    navigation.navigate('App.SignUp', {
+                        continueSignup: true,
+                        target: 'SignUp.OTP',
+                        metadata: {
+                            username,
+                            password: pwd,
+                        }
+                    });
+                }
                 alertUser(err.message);
             })
             .finally(() => {
@@ -54,9 +66,9 @@ function LoginScreen(props: PropsWithChildren & NativeStackScreenProps<any>): JS
         height: "100%",
         backgroundColor: secondary,
     }}>
-        <Stack px={40} pt={60} marginBottom={30}>
+        <Stack paddingHorizontal={40} paddingTop={60} marginBottom={30}>
             <XStack style={{ width: "100%" }}>
-                <Image source={logo} width={150} height={75} mb={25} resizeMode="contain" />
+                <Image source={logo} width={150} height={75} marginBottom={25} resizeMode="contain" />
             </XStack>
             <InputWithError
                 value={username}
@@ -68,7 +80,7 @@ function LoginScreen(props: PropsWithChildren & NativeStackScreenProps<any>): JS
                     returnKeyType: "next",
                 }}
                 disabled={loading}
-                mb={12}
+                marginBottom={12}
             />
             <XStack gap={5}>
                 <InputWithError
@@ -81,12 +93,12 @@ function LoginScreen(props: PropsWithChildren & NativeStackScreenProps<any>): JS
                         secureTextEntry: !showPwd,
                     }}
                     disabled={loading}
-                    mb={12}
+                    marginBottom={12}
                     flex={1}
                 />
                 <Button icon={<Ionicons name={showIcon} size={24} />} onPress={() => setShowPwd(v => !v)} />
             </XStack>
-            <XStack mb={40} justifyContent="flex-end">
+            <XStack marginBottom={40} justifyContent="flex-end">
                 <Pressable onPress={handleOnSignup} disabled={loading}>
                     <Text fontSize={11} color={"#0EA5EF"} textDecorationLine="underline">Don't have an account?</Text>
                 </Pressable>

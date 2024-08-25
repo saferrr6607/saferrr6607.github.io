@@ -75,8 +75,6 @@ function useCognitoDetail(): cognitoType {
 
     }, []);
 
-    console.log("cognito", cognito);
-
     return cognito;
 
 }

@@ -233,6 +233,8 @@ type EagerUserVerification = {
   readonly selfie_mime_type?: string | null;
   readonly selfie_key?: string | null;
   readonly verified?: boolean | null;
+  readonly verify_status?: string | null;
+  readonly denied_reason?: string | null;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -251,6 +253,8 @@ type LazyUserVerification = {
   readonly selfie_mime_type?: string | null;
   readonly selfie_key?: string | null;
   readonly verified?: boolean | null;
+  readonly verify_status?: string | null;
+  readonly denied_reason?: string | null;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -339,7 +343,7 @@ type EagerAccountInvites = {
   };
   readonly id: string;
   readonly code?: InviteCodes | keyof typeof InviteCodes | null;
-  readonly owner?: string | null;
+  readonly cognito_id?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -351,7 +355,7 @@ type LazyAccountInvites = {
   };
   readonly id: string;
   readonly code?: InviteCodes | keyof typeof InviteCodes | null;
-  readonly owner?: string | null;
+  readonly cognito_id?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -388,4 +392,34 @@ export declare type MobileAppOptions = LazyLoading extends LazyLoadingDisabled ?
 
 export declare const MobileAppOptions: (new (init: ModelInit<MobileAppOptions>) => MobileAppOptions) & {
   copyOf(source: MobileAppOptions, mutator: (draft: MutableModel<MobileAppOptions>) => MutableModel<MobileAppOptions> | void): MobileAppOptions;
+}
+
+type EagerSignupStage = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<SignupStage, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly step?: string | null;
+  readonly owner?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazySignupStage = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<SignupStage, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly step?: string | null;
+  readonly owner?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type SignupStage = LazyLoading extends LazyLoadingDisabled ? EagerSignupStage : LazySignupStage
+
+export declare const SignupStage: (new (init: ModelInit<SignupStage>) => SignupStage) & {
+  copyOf(source: SignupStage, mutator: (draft: MutableModel<SignupStage>) => MutableModel<SignupStage> | void): SignupStage;
 }

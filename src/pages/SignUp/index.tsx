@@ -1,13 +1,14 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack";
 import CreateAccountScreen from "./CreateAccountScreen";
 import { Text } from "react-native";
-import React, { createContext, useReducer, useState } from "react";
+import React, { createContext, useCallback, useReducer, useState } from "react";
 import { AccountType, EmergencyContactType, FormType, MedicalRecordType, reducerActionType } from "./types";
 import MedicalRecordScreen from "./MedicalRecordScreen";
 import OTPScreen from "./OTPScreen";
 import EmergencyContactScreen from "./EmergencyContactScreen";
 import UserVerificationScreen from "./UserVerificationScreen";
 import InviteCodeScreen from "./InviteCodeScreen";
+import { useFocusEffect } from "@react-navigation/native";
 
 const NavigationStack = createNativeStackNavigator();
 
@@ -109,13 +110,57 @@ const FormContext = createContext<FormType>({
     updateInviteCode: () => { },
 });
 
-function SignUpNavigation(): JSX.Element {
+import { API } from 'aws-amplify';
+
+async function fetchUserByEmail(email: string) {
+    try {
+        const path = '/listUsers';  // The API path set up by the Admin Queries
+        const data = await API.get('AdminQueries', path, {
+            queryStringParameters: {
+                attribute_name: 'email',
+                attribute_value: email,
+            },
+        });
+        console.log('User data:', data);
+        return data;
+    } catch (err) {
+        console.error('Error fetching user:', err);
+    }
+}
+
+function SignUpNavigation(props: NativeStackScreenProps<any>): JSX.Element {
+
+    const { navigation, route } = props;
+    console.log(route);
+    const continueSignup = route.params?.continueSignup ?? false;
+    console.log('continueSignup', continueSignup);
+    const target = route.params?.target ?? 'App.Main';
+    console.log('target', target);
+    const metadata = route.params?.metadata;
+    console.log('metadata', metadata);
 
     const [account, onUpdateAccount] = useAccountForm();
     const [emergency_contact, onUpdateContact] = useContactForm();
 
     const [inviteCode, setInviteCode] = useState<string>("");
     const updateInviteCode = (code: string) => setInviteCode(code);
+
+    useFocusEffect(useCallback(() => {
+
+        let mounted = true;
+
+        if (mounted) {
+            if (continueSignup) {
+                fetchUserByEmail(metadata.username)
+                    .then(resp => { });
+            }
+        }
+
+        return function () {
+            mounted = false;
+        }
+
+    }, [continueSignup, target, metadata]));
 
     return <FormContext.Provider value={{
         ...account,

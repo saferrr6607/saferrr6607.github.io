@@ -1,7 +1,7 @@
 import { DataStore } from 'aws-amplify';
 import React, { useEffect, useState } from 'react';
 import useCognitoDetail from '../hooks/useCognito';
-import { EmergencyContact } from '../models';
+import { EmergencyContact, MobileAppOptions } from '../models';
 import { ContactPersonType } from '../types/contacts';
 
 export type UserStateType = 'signup' | 'login' | 'in-app';

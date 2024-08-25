@@ -10,7 +10,7 @@ const InviteCodes = {
   "SDG5": "SDG5"
 };
 
-const { Notification, LocationReport, IncidentReport, MedicalRecord, EmergencyContact, UserVerification, SafeWords, AccountSettings, AccountInvites, MobileAppOptions } = initSchema(schema);
+const { Notification, LocationReport, IncidentReport, MedicalRecord, EmergencyContact, UserVerification, SafeWords, AccountSettings, AccountInvites, MobileAppOptions, SignupStage } = initSchema(schema);
 
 export {
   Notification,
@@ -23,5 +23,6 @@ export {
   AccountSettings,
   AccountInvites,
   MobileAppOptions,
+  SignupStage,
   InviteCodes
 };

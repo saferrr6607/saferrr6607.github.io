@@ -644,6 +644,20 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "verify_status": {
+                    "name": "verify_status",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "denied_reason": {
+                    "name": "denied_reason",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "owner": {
                     "name": "owner",
                     "isArray": false,
@@ -899,8 +913,8 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "owner": {
-                    "name": "owner",
+                "cognito_id": {
+                    "name": "cognito_id",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -935,16 +949,10 @@ export const schema = {
                     "properties": {
                         "rules": [
                             {
-                                "provider": "userPools",
-                                "ownerField": "owner",
-                                "allow": "owner",
+                                "allow": "public",
                                 "operations": [
-                                    "create",
-                                    "update",
-                                    "delete",
-                                    "read"
-                                ],
-                                "identityClaim": "cognito:username"
+                                    "create"
+                                ]
                             },
                             {
                                 "groupClaim": "cognito:groups",
@@ -1017,6 +1025,75 @@ export const schema = {
                     }
                 }
             ]
+        },
+        "SignupStage": {
+            "name": "SignupStage",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "step": {
+                    "name": "step",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "owner": {
+                    "name": "owner",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "SignupStages",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "provider": "userPools",
+                                "ownerField": "owner",
+                                "allow": "owner",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ],
+                                "identityClaim": "cognito:username"
+                            }
+                        ]
+                    }
+                }
+            ]
         }
     },
     "enums": {
@@ -1033,5 +1110,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "9b12e4a69875fd9277ec4ef7badc284b"
+    "version": "9fb5dd306d691af0ee20ed129f56f610"
 };
